@@ -1,5 +1,7 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -45,6 +47,7 @@ public class Bien implements Serializable {
 	@XmlTransient
 	@ManyToOne
 	@JoinColumn(name = "BIE_DET_CODIGO", nullable = false)
+	@JsonBackReference
 	private DetalleCabecera detalleCabecera;
 	
 	@XmlElement(name = "NumeroOrden")
