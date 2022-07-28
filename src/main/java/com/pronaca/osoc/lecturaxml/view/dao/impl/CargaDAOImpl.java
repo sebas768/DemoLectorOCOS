@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.pronaca.osoc.lecturaxml.model.entities.CargaError;
-import com.pronaca.osoc.lecturaxml.model.entities.CargaIdb;
+//import com.pronaca.osoc.lecturaxml.model.entities.CargaError;
+//import com.pronaca.osoc.lecturaxml.model.entities.CargaIdb;
 import com.pronaca.osoc.lecturaxml.view.dao.ICargaDAO;
 
 @Service
@@ -14,7 +14,7 @@ public class CargaDAOImpl implements ICargaDAO {
 	@Autowired
 	private JdbcTemplate template;
 
-	@Override
+	/*@Override
 	public Integer crearCarga(CargaIdb c) throws Exception {
 		return 0;
 	}
@@ -34,6 +34,6 @@ public class CargaDAOImpl implements ICargaDAO {
 	public Integer actualizarCarga(CargaIdb c) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 }

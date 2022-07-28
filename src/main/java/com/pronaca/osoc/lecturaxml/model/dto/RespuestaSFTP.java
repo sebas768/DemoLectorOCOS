@@ -2,7 +2,6 @@ package com.pronaca.osoc.lecturaxml.model.dto;
 
 import java.io.Serializable;
 import java.io.File;
-import java.io.InputStream;
 
 public class RespuestaSFTP implements Serializable {
 	/**

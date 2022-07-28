@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.pronaca.osoc.lecturaxml.loaderxml.FactoryLoaderXml;
+import com.pronaca.osoc.lecturaxml.loaderxml.ILoaderXml;
 
 @Configuration
 @EnableScheduling
@@ -29,10 +29,10 @@ public class JobConfig implements SchedulingConfigurer {
 	Environment env;
 
 	@Autowired
-	private FactoryLoaderXml factoryLoaderXml;
+	private ILoaderXml iLoaderxML;
 
 	@Bean(destroyMethod = "shutdown")
-	public Executor taskExecutor() {
+	Executor taskExecutor() {
 		return Executors.newScheduledThreadPool(100);
 	}
 
@@ -44,7 +44,7 @@ public class JobConfig implements SchedulingConfigurer {
 			public void run() {
 				log.info("Ejecuta Cron...");
 				try {
-					factoryLoaderXml.getIAplicaPromocionLoaderView().loadJob();
+					iLoaderxML.loadXml();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,7 +60,7 @@ public class JobConfig implements SchedulingConfigurer {
 				fechaInicio.add(Calendar.MINUTE, 30);
 				nextExecutionTime
 						.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
-				nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently", Integer.class)); 
+				nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently", Integer.class));
 				return nextExecutionTime.getTime();
 			}
 		});

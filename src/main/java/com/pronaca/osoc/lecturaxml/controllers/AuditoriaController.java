@@ -6,17 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pronaca.osoc.lecturaxml.loaderxml.FactoryLoaderXml;
+import com.pronaca.osoc.lecturaxml.loaderxml.ILoaderXml;
 
 @RestController
 public class AuditoriaController {
 	@Autowired
-	private FactoryLoaderXml factoryLoaderXml;
+	private ILoaderXml iLoaderxML;
 
 	@GetMapping("/cargas/aplica-promocion")
 	public ResponseEntity<?> findByColorAndPublicacion() {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(factoryLoaderXml.getIAplicaPromocionLoaderView().loadJob());
+			return ResponseEntity.status(HttpStatus.OK).body(iLoaderxML.loadXml());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.GONE).body(e.getMessage());

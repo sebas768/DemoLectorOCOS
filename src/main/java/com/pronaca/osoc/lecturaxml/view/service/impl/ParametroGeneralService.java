@@ -38,7 +38,7 @@ public class ParametroGeneralService implements IParametroGeneralService {
 	public Integer getInteger(String pk) throws Exception {
 		List<ParametroGeneral> parametro = parametroGeneralRepository.findByCodigo(pk);
 		if (parametro != null && !parametro.isEmpty())
-			return Integer.valueOf(parametro.get(0).getValorEntero().toString());
+			return Integer.valueOf(parametro.get(0).getValorCadena());
 		else
 			return null;
 	}
@@ -53,7 +53,7 @@ public class ParametroGeneralService implements IParametroGeneralService {
 	public Double getDouble(String pk) throws Exception {
 		List<ParametroGeneral> parametro = parametroGeneralRepository.findByCodigo(pk);
 		if (parametro != null && !parametro.isEmpty())
-			return Double.valueOf(parametro.get(0).getValorEntero().toString());
+			return Double.valueOf(parametro.get(0).getValorCadena());
 		else
 			return null;
 	}

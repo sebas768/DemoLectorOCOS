@@ -44,7 +44,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 			xmlr.nextTag();
 			Boolean existeRegistros = Boolean.TRUE;
 			while (existeRegistros) {
-				try {
+				try { 
 					if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT) {
 						JAXBElement<T> pt = unmarshaller.unmarshal(xmlr, entity);
 						T retorno = pt.getValue();
@@ -63,18 +63,22 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 					xmlste.printStackTrace();
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			xmlr.close();
 			System.gc();
+			
 			if (respuestaFTP.getFileDownload().exists()) {
-				respuestaFTP.getFileDownload().delete();
+				System.out.println(respuestaFTP.getFileDownload());
+				if (respuestaFTP.getFileDownload().delete()) {
+					System.out.println("BORRADO");
+				} 
 			}
 		}
 		return registros;
 	}
 
-	public void cerrarArchivo() throws XMLStreamException {
-
-	}
+	public void cerrarArchivo() throws XMLStreamException {}
 
 }

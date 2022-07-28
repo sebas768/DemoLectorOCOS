@@ -29,6 +29,34 @@ public class FechaUtil {
 		return new Date();
 	}
 
+	public static String ajustarFormatoOcos(String fechaString) {
+		SimpleDateFormat formatterOut = new SimpleDateFormat("dd/MM/yyyy");
+		String format = ""; 
+		String format1 = "dd-MMM-yy";
+		String format2 = "yyyy-MM-dd";
+		String format3 = "dd-MM-yyyy HH:mm:ss"; 
+		if(fechaString.length() == format1.length()) {
+			format=format1;
+		}else if(fechaString.length() == format2.length()) {
+			format=format2;
+		}else if(fechaString.length() == format3.length()){
+			format=format3;
+		}
+		try {
+			if (fechaString != "" && format != "") {
+				Date fechaDate = null;
+				SimpleDateFormat formatInit = new SimpleDateFormat(format);
+				fechaDate = formatInit.parse(fechaString);
+				return fechaDate == null ? "" : formatterOut.format(fechaDate);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	
 	public static String aplicarFromato(Date fecha, String formato) {
 		SimpleDateFormat formatter = new SimpleDateFormat(formato, new Locale("es"));
 		return fecha == null ? "" : formatter.format(fecha);
@@ -43,7 +71,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna el String de una fecha con el formato deseado
+	 * Mï¿½todo que retorna el String de una fecha con el formato deseado
 	 * 
 	 * @param date
 	 *            La fecha a la que se aplica el formato
@@ -57,7 +85,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna el dia actual de una fecha
+	 * Mï¿½todo que retorna el dia actual de una fecha
 	 * 
 	 * @param date
 	 *            La fecha a la que se aplica el formato
@@ -78,7 +106,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la edad en años dada una fecha.
+	 * Mï¿½todo que retorna la edad en aï¿½os dada una fecha.
 	 * 
 	 * @author osmany.ce 07/05/2015
 	 * @param fechaNacimiento
@@ -105,7 +133,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna si una fecha está dentro (incluidos los extremos) de
+	 * Mï¿½todo que retorna si una fecha estï¿½ dentro (incluidos los extremos) de
 	 * un rango de fechas. No se toma en cuenta la hora.
 	 * 
 	 * @author osmany.ce 07/05/2015
@@ -136,7 +164,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna si la fecha1 es mayor que la fecha2.
+	 * Mï¿½todo que retorna si la fecha1 es mayor que la fecha2.
 	 * 
 	 * @author osmany.ce
 	 * @param fecha1
@@ -151,7 +179,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la cantidad de años entre dos fechas. El orden de las
+	 * Mï¿½todo que retorna la cantidad de aï¿½os entre dos fechas. El orden de las
 	 * fechas no importa.
 	 * 
 	 * @author osmany.ce 07/05/2015
@@ -172,8 +200,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la cantidad de días que tiene un mes, dada una fecha
-	 * como parámetro.
+	 * Mï¿½todo que retorna la cantidad de dï¿½as que tiene un mes, dada una fecha
+	 * como parï¿½metro.
 	 * 
 	 * @author osmany.ce 02/10/2015
 	 * @param fecha
@@ -186,8 +214,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna fecha con la cantidad de días que se pasan como
-	 * parámetro sumados o restados.
+	 * Mï¿½todo que retorna fecha con la cantidad de dï¿½as que se pasan como
+	 * parï¿½metro sumados o restados.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @param fecha
@@ -207,15 +235,15 @@ public class FechaUtil {
 		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha);
-		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
+		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de dï¿½as a aï¿½adir, o
 													// restar en caso de
-													// días < 0
+													// dï¿½as < 0
 		return calendar.getTime();
 	}
 
 	/**
-	 * Método que retorna fecha con la cantidad de días que se pasan como
-	 * parámetro sumados o restados.
+	 * Mï¿½todo que retorna fecha con la cantidad de dï¿½as que se pasan como
+	 * parï¿½metro sumados o restados.
 	 * 
 	 * @author amaldonado 03/06/2015
 	 * @param fecha
@@ -229,15 +257,15 @@ public class FechaUtil {
 		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha);
-		calendar.add(Calendar.MONTH, meses); // numero de meses a añadir, o
+		calendar.add(Calendar.MONTH, meses); // numero de meses a aï¿½adir, o
 												// restar en caso de meses
 												// < 0
 		return calendar.getTime();
 	}
 
 	/**
-	 * Método que retorna fecha con la cantidad de días que se pasan como
-	 * parámetro sumados o restados.
+	 * Mï¿½todo que retorna fecha con la cantidad de dï¿½as que se pasan como
+	 * parï¿½metro sumados o restados.
 	 * 
 	 * @author amaldonado 03/06/2015
 	 * @param fecha
@@ -251,15 +279,15 @@ public class FechaUtil {
 		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha);
-		calendar.add(Calendar.YEAR, annos); // numero de meses a añadir, o
+		calendar.add(Calendar.YEAR, annos); // numero de meses a aï¿½adir, o
 											// restar en caso de annos <
 											// 0
 		return calendar.getTime();
 	}
 
 	/**
-	 * Método que retorna la fecha en el primer día del mes, de la fecha pasada
-	 * como parámetro.
+	 * Mï¿½todo que retorna la fecha en el primer dï¿½a del mes, de la fecha pasada
+	 * como parï¿½metro.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @param fecha
@@ -273,7 +301,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna un némero en texto, formado por la hora actual.
+	 * Mï¿½todo que retorna un nï¿½mero en texto, formado por la hora actual.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @return
@@ -284,8 +312,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la fecha en el último día del mes, de la fecha pasada
-	 * como parámetro.
+	 * Mï¿½todo que retorna la fecha en el ï¿½ltimo dï¿½a del mes, de la fecha pasada
+	 * como parï¿½metro.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @param fecha
@@ -300,7 +328,7 @@ public class FechaUtil {
 	
 
 	/**
-	 * Método que retorna el año actual.
+	 * Mï¿½todo que retorna el aï¿½o actual.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @return
@@ -312,7 +340,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna el año de una fecha pasada como parámetro.
+	 * Mï¿½todo que retorna el aï¿½o de una fecha pasada como parï¿½metro.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @param fecha
@@ -325,7 +353,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna el mes de una fecha pasada como parámetro. El primer
+	 * Mï¿½todo que retorna el mes de una fecha pasada como parï¿½metro. El primer
 	 * mes del calendario (enero) es el valor 0
 	 * 
 	 * @author osmany.ce 08/09/2015
@@ -339,8 +367,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la cantidad de días que faltan de un mes, dada una
-	 * fecha como parámetro.
+	 * Mï¿½todo que retorna la cantidad de dï¿½as que faltan de un mes, dada una
+	 * fecha como parï¿½metro.
 	 * 
 	 * @author osmany.ce 13/08/2015
 	 * @param fecha
@@ -356,8 +384,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la cantidad de días que han pasado de un mes, dada una
-	 * fecha como parámetro.
+	 * Mï¿½todo que retorna la cantidad de dï¿½as que han pasado de un mes, dada una
+	 * fecha como parï¿½metro.
 	 * 
 	 * @author osmany.ce 02/06/2015
 	 * @param fecha
@@ -378,8 +406,8 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna dada una fecha como parámetro, si el día es menor que
-	 * el otro número pasado como parámetro.
+	 * Mï¿½todo que retorna dada una fecha como parï¿½metro, si el dï¿½a es menor que
+	 * el otro nï¿½mero pasado como parï¿½metro.
 	 * 
 	 * @author osmany.ce 11/08/2015
 	 * @param boolean
@@ -394,7 +422,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método para copiar uana fecha pasada como parámetro.
+	 * Mï¿½todo para copiar uana fecha pasada como parï¿½metro.
 	 * 
 	 * @author osmany.ce 03/07/2015
 	 * @param fecha
@@ -407,7 +435,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la fecha pasada como parámetro sin la hora.
+	 * Mï¿½todo que retorna la fecha pasada como parï¿½metro sin la hora.
 	 * 
 	 * @author osmany.ce 29/05/2015
 	 * @param fecha
@@ -432,7 +460,7 @@ public class FechaUtil {
 	}
 
 	/**
-	 * Método que retorna la cantidad de meses, dias, horas, minutos, segundos.
+	 * Mï¿½todo que retorna la cantidad de meses, dias, horas, minutos, segundos.
 	 * Cuando la fechaFin es el mes de febrero no lo cuenta como un mes
 	 */
 	@SuppressWarnings("static-access")
@@ -454,7 +482,7 @@ public class FechaUtil {
 		// correponda
 		String[] mesesAnio = new String[12];
 		mesesAnio[0] = "31";
-		// validacion de los años bisiestos
+		// validacion de los aï¿½os bisiestos
 		if (jCal.isLeapYear(jCal.YEAR)) {
 			mesesAnio[1] = "29";
 		} else {
@@ -471,7 +499,7 @@ public class FechaUtil {
 		mesesAnio[10] = "30";
 		mesesAnio[11] = "31";
 		int diasRestantes = (int) dias;
-		// variable almacenará el total de meses que hay en esos dias
+		// variable almacenarï¿½ el total de meses que hay en esos dias
 		int totalMeses = 0;
 		int mesActual = jCal.MONTH;
 		// Restar los dias de cada mes desde la fecha de ingreso hasta que ya no
@@ -479,8 +507,8 @@ public class FechaUtil {
 		// dias para
 		// completar un mes.
 		for (int i = 0; i <= 11; i++) {
-			// Validar año, si sumando 1 al mes actual supera el fin de año,
-			// setea la variable a principio de año
+			// Validar aï¿½o, si sumando 1 al mes actual supera el fin de aï¿½o,
+			// setea la variable a principio de aï¿½o
 			if ((mesActual + 1) >= 12) {
 				mesActual = i;
 			}

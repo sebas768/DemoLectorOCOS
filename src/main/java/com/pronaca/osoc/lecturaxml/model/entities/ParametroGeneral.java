@@ -1,7 +1,6 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,8 +16,9 @@ import javax.persistence.TemporalType;
  * The persistent class for the B2B_PARAMETRO_GENERAL database table.
  */
 @Entity
-@Table(name = "B2B_PARAMETRO_GENERAL")
-@NamedQueries({	@NamedQuery(name = "ParametroGeneral.findParametros", query = "Select object(t) from ParametroGeneral as t where t.modificable ='SI' " )})
+@Table(name = "LEC_PARAMETRO_GENERAL")
+@NamedQueries({
+		@NamedQuery(name = "ParametroGeneral.findParametros", query = "Select object(t) from ParametroGeneral as t where t.modificable ='SI' ") })
 public class ParametroGeneral implements Serializable {
 
 	private static final long serialVersionUID = 700413412370715597L;
@@ -43,14 +43,8 @@ public class ParametroGeneral implements Serializable {
 	@Column(name = "PGE_TIPO_DATO")
 	private String tipoDato;
 
-	@Column(name = "PGE_VALOR_CADENA")
+	@Column(name = "PGE_VALOR")
 	private String valorCadena;
-
-	@Column(name = "PGE_VALOR_DECIMAL")
-	private BigDecimal valorDecimal;
-
-	@Column(name = "PGE_VALOR_ENTERO")
-	private Long valorEntero;
 
 	public ParametroGeneral() {
 		super();
@@ -110,22 +104,6 @@ public class ParametroGeneral implements Serializable {
 
 	public void setValorCadena(String valorCadena) {
 		this.valorCadena = valorCadena;
-	}
-
-	public BigDecimal getValorDecimal() {
-		return valorDecimal;
-	}
-
-	public void setValorDecimal(BigDecimal valorDecimal) {
-		this.valorDecimal = valorDecimal;
-	}
-
-	public Long getValorEntero() {
-		return valorEntero;
-	}
-
-	public void setValorEntero(Long valorEntero) {
-		this.valorEntero = valorEntero;
 	}
 
 }

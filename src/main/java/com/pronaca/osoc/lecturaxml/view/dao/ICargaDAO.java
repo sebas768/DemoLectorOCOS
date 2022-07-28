@@ -1,7 +1,7 @@
 package com.pronaca.osoc.lecturaxml.view.dao;
 
-import com.pronaca.osoc.lecturaxml.model.entities.CargaError;
-import com.pronaca.osoc.lecturaxml.model.entities.CargaIdb;
+//import com.pronaca.osoc.lecturaxml.model.entities.CargaError;
+//import com.pronaca.osoc.lecturaxml.model.entities.CargaIdb;
 
 public interface ICargaDAO {
 
@@ -14,12 +14,12 @@ public interface ICargaDAO {
 	 * @return Integer
 	 * @throws ControlEjecucionException
 	 */
-	Integer crearCarga(CargaIdb c) throws Exception;
+	/*Integer crearCarga(CargaIdb c) throws Exception;
 
 	Integer crearError(CargaError e) throws Exception;
 
 	CargaIdb buscar(Long id) throws Exception;
 	
-	Integer actualizarCarga(CargaIdb c) throws Exception;
+	Integer actualizarCarga(CargaIdb c) throws Exception;*/
 
 }
