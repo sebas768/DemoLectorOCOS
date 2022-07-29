@@ -1,5 +1,8 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,6 +61,7 @@ public class DetalleCabecera implements Serializable {
 	@XmlTransient
 	@ManyToOne
 	@JoinColumn(name = "DET_NUMERO_ORDEN", nullable = false)
+	@JsonBackReference
 	private CabeceraOrden cabeceraOrden;
 
 	@XmlTransient
@@ -264,12 +268,14 @@ public class DetalleCabecera implements Serializable {
 	@XmlElementWrapper(name = "Dimensiones")
 	@XmlElement(name = "Dimension", namespace = "")
 	@OneToMany(mappedBy = "detalleCabecera")
+	@JsonManagedReference
 	private List<Dimension> dimension;
 
 	// bidirectional many-to-one association to Bien
 	@XmlElementWrapper(name = "Bienes")
 	@XmlElement(name = "Bien", namespace = "")
 	@OneToMany(mappedBy = "detalleCabecera")
+	@JsonManagedReference
 	private List<Bien> bien;
 
 	public Long getCodigo() {

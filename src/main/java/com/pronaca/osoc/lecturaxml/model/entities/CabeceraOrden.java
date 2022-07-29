@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
@@ -284,6 +285,7 @@ public class CabeceraOrden implements Serializable {
 	// bidirectional many-to-one association to DetalleCabecera
 	@XmlTransient
 	@OneToMany(mappedBy = "cabeceraOrden")
+	@JsonManagedReference
 	private List<DetalleCabecera> detalleCabecera;
 
 	public String getNumeroOrden() {
