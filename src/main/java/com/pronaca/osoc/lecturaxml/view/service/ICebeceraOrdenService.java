@@ -1,9 +1,9 @@
 package com.pronaca.osoc.lecturaxml.view.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
  * 
@@ -46,6 +46,6 @@ public interface ICebeceraOrdenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, String estado) throws Exception;
+	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception;
 	
 }

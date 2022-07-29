@@ -31,21 +31,22 @@ public class FechaUtil {
 
 	public static String ajustarFormatoOcos(String fechaString) {
 		SimpleDateFormat formatterOut = new SimpleDateFormat("dd/MM/yyyy");
-		String format = ""; 
+		SimpleDateFormat formatInit = null;
 		String format1 = "dd-MMM-yy";
 		String format2 = "yyyy-MM-dd";
 		String format3 = "dd-MM-yyyy HH:mm:ss"; 
+		
 		if(fechaString.length() == format1.length()) {
-			format=format1;
+			formatInit = new SimpleDateFormat(format1, Locale.ENGLISH);
 		}else if(fechaString.length() == format2.length()) {
-			format=format2;
-		}else if(fechaString.length() == format3.length()){
-			format=format3;
+			formatInit = new SimpleDateFormat(format2);
+		}else if(fechaString.length() == format3.length()){  
+			formatInit = new SimpleDateFormat(format3);
 		}
+		
 		try {
-			if (fechaString != "" && format != "") {
+			if (fechaString != "" && formatInit != null) {
 				Date fechaDate = null;
-				SimpleDateFormat formatInit = new SimpleDateFormat(format);
 				fechaDate = formatInit.parse(fechaString);
 				return fechaDate == null ? "" : formatterOut.format(fechaDate);
 			}

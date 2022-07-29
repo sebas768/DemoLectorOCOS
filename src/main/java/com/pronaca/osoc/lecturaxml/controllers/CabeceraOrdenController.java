@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.view.service.ICebeceraOrdenService;
 
 @RestController
@@ -20,8 +21,8 @@ public class CabeceraOrdenController {
 												@RequestParam("fn")String fechaFin,
 												@RequestParam("c")String codigo,
 												@RequestParam("p")String codProveedor,
-												@RequestParam("e")String empresa,
-												@RequestParam("s")String estado) {
+												@RequestParam("e")String empresa, 
+												@RequestParam("s")EstadoEnum estado) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(iCebeceraOrdenService.searchByParameters(fechaInicio, fechaFin, codigo, codProveedor, empresa, estado));
 		} catch (Exception e) {

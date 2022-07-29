@@ -34,14 +34,14 @@ import javax.xml.bind.annotation.XmlType;
 					  "texto20", "numerico1", "numerico2", "numerico3", "numerico4", "numerico5", "fecha1",
 					  "fecha2", "fecha3", "fecha4", "fecha5"})
 public class Dimension implements Serializable {
-
+ 
 	private static final long serialVersionUID = 700413412370715597L;
 	
-	@Id
 	@XmlTransient
+	@Id
 	@SequenceGenerator(name = "LEC_DIMENSION_DIM_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_DIMENSION",allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_DIMENSION_DIM_CODIGO_GENERATOR")
-	@Column(name = "DIM_CODIGO")
+	@Column(name = "DIM_CODIGO") 
 	private Long codigo;
 	
 	// bidirectional many-to-one association

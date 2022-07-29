@@ -63,19 +63,37 @@ public class AplicaPromocionServiceImpl extends ServiceXmlGeneric<Transaccion, L
 	public void cargar(Transaccion ocos) throws Exception {
 		CabeceraOrden cabecera = ocos.getCabecera();
 		cabecera.setFechaProceso(FechaUtil.ajustarFormatoOcos(cabecera.getFechaProceso()));
+		cabecera.setFechaOrden(FechaUtil.ajustarFormatoOcos(cabecera.getFechaOrden()));
+		cabecera.setFechaPlanificadaRecepcion(FechaUtil.ajustarFormatoOcos(cabecera.getFechaPlanificadaRecepcion()));
+		cabecera.setFechaRealRecepcion(FechaUtil.ajustarFormatoOcos(cabecera.getFechaRealRecepcion()));
+		cabecera.setFecha1(FechaUtil.ajustarFormatoOcos(cabecera.getFecha1()));
+		cabecera.setFecha2(FechaUtil.ajustarFormatoOcos(cabecera.getFecha2()));
+		cabecera.setFecha3(FechaUtil.ajustarFormatoOcos(cabecera.getFecha3()));
+		cabecera.setFecha4(FechaUtil.ajustarFormatoOcos(cabecera.getFecha4())); 
+		cabecera.setFecha5(FechaUtil.ajustarFormatoOcos(cabecera.getFecha5()));
+		cabecera.setFacturado(cabecera.getFacturado().toLowerCase());
+		cabecera.setLiberado(cabecera.getLiberado().toLowerCase());
+		cabecera.setEstadoRecupDatos(cabecera.getEstadoRecupDatos().toLowerCase());
+		cabecera.setBienesFacturadosRecib(cabecera.getBienesFacturadosRecib().toLowerCase());
 		cabeceraOrdenRepository.save(cabecera);
 		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();
 		if(detalle!=null && !detalle.isEmpty()) {
 			detalle.parallelStream().forEach(det -> {
 				det.setCabeceraOrden(cabecera);
 				detalleCabeceraRepository.save(det);
-				List<Bien> bien = det.getBien();
-				List<Dimension> dimension = det.getDimension();
-				if(bien!=null && !bien.isEmpty()) {
-					
+				List<Bien> bienes = det.getBien();
+				List<Dimension> dimensiones = det.getDimension(); 
+				if(bienes!=null && !bienes.isEmpty()) {
+					bienes.stream().forEach(b -> {
+						b.setDetalleCabecera(det);
+						bienRepository.save(b); 
+					});  
 				}
-				if(dimension!=null && !dimension.isEmpty()) {
-					
+				if(dimensiones!=null && !dimensiones.isEmpty()) {
+					dimensiones.stream().forEach(d -> {
+						d.setDetalleCabecera(det);
+						dimensionRepository.save(d);
+					});
 				}
 			});
 		}

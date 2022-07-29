@@ -68,7 +68,7 @@ public class CabeceraOrdenService implements ICebeceraOrdenService {
 
 	
 	@Override
-	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, String estado) throws Exception {
+	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception {
 		try {
 			List<CabeceraOrden> ocos = cabeceraOrdenRepository.findByParametros(fechaInicio, fechaFin, codigo, codProveedor, empresa, estado);
 			if (ocos != null && !ocos.isEmpty()) {
