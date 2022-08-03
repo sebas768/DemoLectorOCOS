@@ -8,6 +8,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @EntityScan({ "com.pronaca.osoc.lecturaxml.model.entities" })
 public class ApiOsocLecturaxmlApplication {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ApiOsocLecturaxmlApplication.class, args);
 	}

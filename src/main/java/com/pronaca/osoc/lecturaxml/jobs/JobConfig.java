@@ -25,6 +25,7 @@ import com.pronaca.osoc.lecturaxml.loaderxml.ILoaderXml;
 public class JobConfig implements SchedulingConfigurer {
 
 	private Logger log = LoggerFactory.getLogger(JobConfig.class);
+	
 	@Autowired
 	Environment env;
 
@@ -56,10 +57,9 @@ public class JobConfig implements SchedulingConfigurer {
 				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 				Calendar fechaInicio = GregorianCalendar.getInstance();
 				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH),
-						fechaInicio.get(Calendar.DAY_OF_MONTH), 0, 2);
+							    fechaInicio.get(Calendar.DAY_OF_MONTH), 0, 2);
 				fechaInicio.add(Calendar.MINUTE, 30);
-				nextExecutionTime
-						.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
+				nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
 				nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently", Integer.class));
 				return nextExecutionTime.getTime();
 			}

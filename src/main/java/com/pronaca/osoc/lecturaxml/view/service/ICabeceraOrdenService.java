@@ -2,6 +2,7 @@ package com.pronaca.osoc.lecturaxml.view.service;
 
 import java.util.List;
 
+import com.pronaca.osoc.lecturaxml.model.dto.CabeceraOrdenDTO;
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
@@ -10,15 +11,16 @@ import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
  * @author bayteq
  *
  */
-public interface ICebeceraOrdenService {
+public interface ICabeceraOrdenService {
 
 	/**
 	 * 
 	 * @param codigo
+	 * @param estado
 	 * @return
 	 * @throws Exception
 	 */
-	public String updateStatus(String codigo) throws Exception;
+	public String updateStatus(String codigo, EstadoEnum estado) throws Exception;
 	
 	/**
 	 * 
@@ -26,7 +28,7 @@ public interface ICebeceraOrdenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CabeceraOrden> getOrderByCode(String codigo) throws Exception;
+	public CabeceraOrdenDTO getByNumeroOrden(String numeroOrden) throws Exception;
 	
 	/**
 	 * 
@@ -48,4 +50,19 @@ public interface ICebeceraOrdenService {
 	 */
 	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception;
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public String delete(Long id) throws Exception;
+	
+	/**
+	 * 
+	 * @param cabeceraOrden
+	 * @return
+	 * @throws Exception
+	 */
+	public String save(CabeceraOrden cabeceraOrden) throws Exception;
 }

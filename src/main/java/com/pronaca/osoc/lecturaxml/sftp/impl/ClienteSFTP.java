@@ -30,11 +30,9 @@ public class ClienteSFTP implements IClienteSFTP {
 	@Override
 	public synchronized RespuestaSFTP downloadFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
 			int puertoSftp, String pathSftp, String pathDownload) throws Exception {
-		System.out.println("File Name Download: "+nameFile); 
+		System.out.println(" | File Name Download: " + nameFile); 
 		synchronized (this) {
 			ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
-			System.out.println(usuarioSftp +" - "+ passwordSftp+" - "+ servidorSftp+" - "+  puertoSftp);
-			System.out.println(channelSftp==null?"Nulo":"True");
 			RespuestaSFTP respuesta = new RespuestaSFTP(); 
 			OutputStream outputStream;
 			try {
@@ -60,11 +58,35 @@ public class ClienteSFTP implements IClienteSFTP {
 			return respuesta;
 		}
 	}
+	
+	@Override
+	public void deleteFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
+			int puertoSftp, String pathSftp) throws Exception {
+		synchronized (this) {
+			ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
+			try {
+				if (channelSftp != null) { 
+					channelSftp.rm("/home/sftp/Alusta/DESA/100159411xml");
+					boolean success = true;
+				    if(success) {
+				    	System.out.println(" | SFTP, File delete success"); 
+				    }
+				} else
+					throw new Exception("No existe conección al SFTP");
+	
+			} catch (SftpException | IOException ex) {
+				logger.error("Error download file", ex);
+			} finally {
+				disconnectChannelSftp(channelSftp);
+			}
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getNameFiles(String usuarioSftp, String passwordSftp, String servidorSftp, int puertoSftp,
 			String pathSftp) throws Exception {
+		System.out.println(" | Read directory filenames"); 
 		ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
 		List<String> nameFiles = new ArrayList<>();
 		try {
@@ -72,8 +94,7 @@ public class ClienteSFTP implements IClienteSFTP {
 				channelSftp.cd(pathSftp);
 				channelSftp.ls(pathSftp).parallelStream().forEach(c -> {
 					LsEntry entry = (LsEntry) c;
-					// System.out.println(String.format("%1s ----> %2s", entry.getLongname(),
-					// entry.getFilename()));
+					// System.out.println(String.format("%1s ----> %2s", entry.getLongname(), entry.getFilename()));
 					if (entry.getLongname().contains("-rw-r--r--"))
 						nameFiles.add(entry.getFilename());
 				});

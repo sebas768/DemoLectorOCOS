@@ -3,8 +3,6 @@ package com.pronaca.osoc.lecturaxml.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
@@ -18,7 +16,8 @@ public class FileXmlUtil {
 		try {
 			
 			Blob fileBlob = null;
-			if(false) {
+			boolean x = false;
+			if(x) {
 				byte[] fileBytes = getBytesFromFile(resp);
 				fileBlob.truncate(0);
 				fileBlob.setBytes(1, fileBytes);
@@ -38,14 +37,14 @@ public class FileXmlUtil {
 		double size_mb = size_kb / 1024;
 		double size_gb = size_mb / 1024 ;
  
-		if (size_gb > 0){
-			size = size_gb + " GB";
-        }else if(size_mb > 0){
-        	size = size_mb + " MB";
+		if (size_gb > 1){
+			size = Math.round(size_gb*100.00)/100.00 + " GB";
+        }else if(size_mb > 1){ 
+        	size = Math.round(size_mb*100.00)/100.00 + " MB";
         }else{
-        	size = size_kb + " KB";
+        	size = Math.round(size_kb*100.00)/100.00 + " KB";
         }
-		return size;
+		return size; 
 	}
 	
 	private byte[] getBytesFromFile(RespuestaSFTP resp) throws IOException {

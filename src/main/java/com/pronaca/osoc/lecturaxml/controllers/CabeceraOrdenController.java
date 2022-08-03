@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
-import com.pronaca.osoc.lecturaxml.view.service.ICebeceraOrdenService;
+import com.pronaca.osoc.lecturaxml.view.service.ICabeceraOrdenService;
 
 @RestController
 public class CabeceraOrdenController {
 	
 	@Autowired
-	private ICebeceraOrdenService iCebeceraOrdenService;
+	private ICabeceraOrdenService iCebeceraOrdenService;
 
 	@GetMapping("/cabecera/searchByParameters")
 	public ResponseEntity<?> searchByParameters(@RequestParam("fi")String fechaInicio, 

@@ -1,6 +1,5 @@
 package com.pronaca.osoc.lecturaxml.view.servicexml.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,28 +10,42 @@ import org.springframework.stereotype.Service;
 import com.pronaca.osoc.lecturaxml.exceptions.NotFundEntityException;
 import com.pronaca.osoc.lecturaxml.exceptions.ValidaEntityException;
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
-import com.pronaca.osoc.lecturaxml.model.entities.ArchivoXml;
 import com.pronaca.osoc.lecturaxml.model.entities.Bien;
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.model.enums.OperacionCRUDEnum;
 import com.pronaca.osoc.lecturaxml.model.xml.Transaccion;
-import com.pronaca.osoc.lecturaxml.util.FechaUtil;
-import com.pronaca.osoc.lecturaxml.view.repositories.ArchivoXmlRepository;
-import com.pronaca.osoc.lecturaxml.view.repositories.BienRepository;
-import com.pronaca.osoc.lecturaxml.view.repositories.CabeceraOrdenRepository;
-import com.pronaca.osoc.lecturaxml.view.repositories.DetalleCabeceraRepository;
-import com.pronaca.osoc.lecturaxml.view.repositories.DimensionRepository;
-import com.pronaca.osoc.lecturaxml.view.servicexml.IAplicaPromocionService;
+import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
+import com.pronaca.osoc.lecturaxml.view.service.IBienService;
+import com.pronaca.osoc.lecturaxml.view.service.ICabeceraOrdenService;
+import com.pronaca.osoc.lecturaxml.view.service.IDetalleCabeceraService;
+import com.pronaca.osoc.lecturaxml.view.service.IDimensionService;
+import com.pronaca.osoc.lecturaxml.view.servicexml.ILecturaXmlService;
 
 @Service
-public class AplicaPromocionServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
-		implements IAplicaPromocionService {
+public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
+		implements ILecturaXmlService {
 
 	private static final long serialVersionUID = -8838186957518713588L;
 
 	@Autowired
+	private IArchivoXmlService archivoXmlService;
+	
+	@Autowired
+	private ICabeceraOrdenService cabeceraOrdenService;
+	
+	@Autowired
+	private IDetalleCabeceraService detalleCabeceraService;
+	
+	@Autowired
+	private IBienService bienService;
+	
+	@Autowired
+	private IDimensionService dimensionService;
+	
+	/*@Autowired
 	private DimensionRepository dimensionRepository;
 	
 	@Autowired
@@ -45,7 +58,8 @@ public class AplicaPromocionServiceImpl extends ServiceXmlGeneric<Transaccion, L
 	private CabeceraOrdenRepository cabeceraOrdenRepository;
 	
 	@Autowired
-	private ArchivoXmlRepository archivoXmlRepository;
+	private ArchivoXmlRepository archivoXmlRepository;*/
+
 
 	@Override
 	public void loadParameterCarga() {
@@ -58,7 +72,7 @@ public class AplicaPromocionServiceImpl extends ServiceXmlGeneric<Transaccion, L
 		return super.validateOperationLoader(o, operacion);
 	}
 
-	@Override
+	/*@Override
 	@Transactional
 	public void cargar(Transaccion ocos) throws Exception {
 		CabeceraOrden cabecera = ocos.getCabecera();
@@ -78,41 +92,74 @@ public class AplicaPromocionServiceImpl extends ServiceXmlGeneric<Transaccion, L
 		cabeceraOrdenRepository.save(cabecera);
 		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();
 		if(detalle!=null && !detalle.isEmpty()) {
-			detalle.parallelStream().forEach(det -> {
+			detalle.stream().forEach(det -> {
 				det.setCabeceraOrden(cabecera);
 				detalleCabeceraRepository.save(det);
 				List<Bien> bienes = det.getBien();
-				List<Dimension> dimensiones = det.getDimension(); 
 				if(bienes!=null && !bienes.isEmpty()) {
 					bienes.stream().forEach(b -> {
 						b.setDetalleCabecera(det);
 						bienRepository.save(b); 
 					});  
 				}
+				List<Dimension> dimensiones = det.getDimension(); 
 				if(dimensiones!=null && !dimensiones.isEmpty()) {
 					dimensiones.stream().forEach(d -> {
 						d.setDetalleCabecera(det);
-						dimensionRepository.save(d);
+						dimensionRepository.save(d); 
 					});
 				}
 			});
 		}
 
+	}*/
+
+	@Override
+	@Transactional
+	public void cargar(Transaccion ocos) throws Exception {
+		System.out.println(" | Persistencia Xml -Jpa");
+		CabeceraOrden cabecera = ocos.getCabecera();
+		cabeceraOrdenService.getByNumeroOrden("380050794");
+		cabeceraOrdenService.save(cabecera);
+		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();
+		if(detalle!=null && !detalle.isEmpty()) {
+			detalle.stream().forEach(det -> { 
+				try {
+					det.setCabeceraOrden(cabecera);
+					detalleCabeceraService.save(det); 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				List<Bien> bienes = det.getBien();
+				if(bienes!=null && !bienes.isEmpty()) {
+					bienes.stream().forEach(b -> { 
+						b.setDetalleCabecera(det);
+						try { 
+							bienService.save(b);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} 
+					});  
+				}
+				List<Dimension> dimensiones = det.getDimension(); 
+				if(dimensiones!=null && !dimensiones.isEmpty()) {
+					dimensiones.stream().forEach(d -> {
+						d.setDetalleCabecera(det);
+						try {
+							dimensionService.save(d);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					});
+				}
+			});
+		}
 	}
 	
 	@Override
 	@Transactional
 	public void cargarXml(RespuestaSFTP resp) throws Exception {
-		ArchivoXml xml = new ArchivoXml();
-		xml.setNombreArchivo(resp.getNombreArchivo());
-		xml.setFechaArchivo(new Date (resp.getFechaArchivo()));
-		xml.setPesoArchivo(resp.getTaminioArchivo().toString());
-		//FileXmlUtil obj = new FileXmlUtil();
-		//aplicaPromocionService.cargarXml(resp);
-		//obj.fileToBlob(resp);
-		//xml.setContentBlob(obj.fileToBlob(resp));
-		
-		archivoXmlRepository.save(xml);
+		archivoXmlService.save(resp, EstadoEnum.CARGADO); 
 	}
 	
 

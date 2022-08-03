@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
 import com.pronaca.osoc.lecturaxml.model.entities.ArchivoXml;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
+import com.pronaca.osoc.lecturaxml.util.FileXmlUtil;
 import com.pronaca.osoc.lecturaxml.view.repositories.ArchivoXmlRepository;
 import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
 
 @Service
 public class ArchivoXmlService implements IArchivoXmlService {
 
-	@Autowired
+	@Autowired 
 	private ArchivoXmlRepository archivoXmlRepository;
 
 	@Override
@@ -40,7 +41,7 @@ public class ArchivoXmlService implements IArchivoXmlService {
 			List<ArchivoXml> xmlList = archivoXmlRepository.findByNombreArchivo(nameFile);
 			if (xmlList != null && !xmlList.isEmpty()) {
 				return true;
-			}else {
+			}else { 
 				return false;
 			}
 		} catch (Exception e) {
@@ -68,12 +69,12 @@ public class ArchivoXmlService implements IArchivoXmlService {
 	@Transactional
 	public String save(RespuestaSFTP resp, EstadoEnum status) throws Exception{
 		try {
+			FileXmlUtil ob = new FileXmlUtil();
 			ArchivoXml xml = new ArchivoXml(); 
 			xml.setNombreArchivo(resp.getNombreArchivo());
 			xml.setFechaArchivo(new Date (resp.getFechaArchivo()));
-			xml.setPesoArchivo(resp.getTaminioArchivo().toString());
-			xml.setEstadoCarga(status.toString());
-			//FileXmlUtil obj = new FileXmlUtil();
+			xml.setPesoArchivo(ob.convertSize(resp.getTaminioArchivo()));
+			xml.setEstadoCarga(status.toString()); 
 			//aplicaPromocionService.cargarXml(resp);
 			//obj.fileToBlob(resp);
 			//xml.setContentBlob(obj.fileToBlob(resp));

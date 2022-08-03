@@ -14,9 +14,10 @@ import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
 
 /**
- * The persistent class for the LEC_ARCHIVO_XML database table.
+ * 
+ * @author bayteq
+ *
  */
-
 @LoaderAnotation(fileXML = "AplicaPromocion.xml", isUpdateEstatus = false)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "cabecera", "detallesCabecera"})

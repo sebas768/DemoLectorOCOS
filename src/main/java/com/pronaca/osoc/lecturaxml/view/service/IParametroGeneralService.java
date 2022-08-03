@@ -17,7 +17,7 @@ public interface IParametroGeneralService {
 
 	/**
 	 * 
-	 * @param pk
+	 * @param pk 
 	 * @return
 	 * @throws Exception
 	 */

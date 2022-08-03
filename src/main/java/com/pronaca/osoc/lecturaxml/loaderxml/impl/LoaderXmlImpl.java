@@ -1,6 +1,5 @@
 package com.pronaca.osoc.lecturaxml.loaderxml.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,9 @@ import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
 import com.pronaca.osoc.lecturaxml.model.xml.Transaccion;
 import com.pronaca.osoc.lecturaxml.sftp.IClienteSFTP;
 import com.pronaca.osoc.lecturaxml.util.Constantes;
-import com.pronaca.osoc.lecturaxml.util.FileXmlUtil;
+import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
 import com.pronaca.osoc.lecturaxml.view.service.IParametroGeneralService;
-import com.pronaca.osoc.lecturaxml.view.servicexml.IAplicaPromocionService;
+import com.pronaca.osoc.lecturaxml.view.servicexml.ILecturaXmlService;
 
 @Service
 public class LoaderXmlImpl implements ILoaderXml {
@@ -26,7 +25,9 @@ public class LoaderXmlImpl implements ILoaderXml {
 	@Autowired
 	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
 	@Autowired
-	private IAplicaPromocionService aplicaPromocionService;
+	private ILecturaXmlService aplicaPromocionService;
+	@Autowired
+	private IArchivoXmlService archivoXmlService;
 
 	protected List<Transaccion> registros;
 
@@ -64,42 +65,42 @@ public class LoaderXmlImpl implements ILoaderXml {
 
 	@Override
 	public String loadXml() throws Exception {
-		System.out.println("Inicai lectura");
+		System.out.println(" | Inicia LecturaXml - SFTP");
 		long tiempoInicio = System.currentTimeMillis();
 		List<String> nameFiles = clienteSFTP.getNameFiles(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(),
 				getPuertoSFTP(), getPathSFTP());
+		
 		nameFiles.stream().forEach(file -> {
 			try {
-				loadJob(file);
+				if(!archivoXmlService.fileExist(file)) {
+					loadJob(file);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
+		
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println("FINALZIA CARGA TOTAL Tiempo " + tiempoInicio);
+		System.out.println(" | Finaliza LecturaXml - SFTP, Tiempo: " + tiempoInicio);
 		return "OK";
-
 	}
 
 	private String loadJob(String nameFile) throws Exception {
-		
 		getLeerXmlStream(nameFile);
-		return uploadData(nameFile);
-	}
+		return uploadData(nameFile); 
+	} 
 
 	public void getLeerXmlStream(String nameFile) throws Exception {
 		try {
 			RespuestaSFTP resp = clienteSFTP.downloadFile(nameFile, getUsuarioSFTP(), getPasswordSFTP(),
 					getServidorSFTP(), getPuertoSFTP(), getPathSFTP(), getPathDownload());
 			if (resp.getFileDownload() != null) {
-				// TODO aqui llamar al servicio para guardar el archivo en bloc
-				System.out.println("Data"+resp.getNombreArchivo());
-				System.out.println("Data"+ new Date (resp.getFechaArchivo()));
-				System.out.println("Data"+resp.getTaminioArchivo());
-				//FileXmlUtil obj = new FileXmlUtil();
-				//aplicaPromocionService.cargarXml(resp);
-				//obj.fileToBlob(resp);
+				
+				// TODO aqui llamar al servicio para guardar el archivo en blob
+				aplicaPromocionService.cargarXml(resp);
+				// Lectura Xml
 				registros = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
+				
 			}
 		} catch (Exception e) {
 			throw e;
@@ -116,10 +117,10 @@ public class LoaderXmlImpl implements ILoaderXml {
 					registros.parallelStream().forEach(xml -> {
 						try {
 							if (xml != null) {
-								// Verifica si el entity es valido
+								// Verifica si el entity es valido 
 								Boolean isValidEntity = xml.isValidEntiti();
 								if (isValidEntity) {
-									aplicaPromocionService.cargar(xml);
+									aplicaPromocionService.cargar(xml); 
 								}
 							}
 						} catch (Exception e) {
@@ -139,8 +140,8 @@ public class LoaderXmlImpl implements ILoaderXml {
 			System.gc();
 		}
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-
-		System.out.println("---------------FINALIZA LECTURA XML " + nameFile + " Tiempo" + tiempoInicio);
+		System.out.println(" | Finaliza lectura " + nameFile + ", Tiempo: " + tiempoInicio);
+		
 		return retorno.toString();
 	}
 }

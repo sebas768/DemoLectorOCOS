@@ -25,6 +25,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 
 	@Override
 	public List<T> obtenerDatos(RespuestaSFTP respuestaFTP, Class<T> entidad) throws Exception {
+		System.out.println(" | Lectura Xml: " + respuestaFTP.getFileDownload());
 		List<T> registros = new ArrayList<>();
 		Class<T> entity = entidad;
 		XMLInputFactory xmlif = XMLInputFactory.newInstance();
@@ -72,6 +73,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 			if (respuestaFTP.getFileDownload().exists()) {
 				System.out.println(respuestaFTP.getFileDownload());
 				if (respuestaFTP.getFileDownload().delete()) {
+					//AJUSTE DELETE FILES
 					System.out.println("BORRADO");
 				} 
 			}

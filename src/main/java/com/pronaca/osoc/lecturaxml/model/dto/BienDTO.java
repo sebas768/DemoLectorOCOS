@@ -2,6 +2,8 @@ package com.pronaca.osoc.lecturaxml.model.dto;
 
 import java.io.Serializable;
 
+import com.pronaca.osoc.lecturaxml.model.entities.Bien;
+
 
 /**
  * 
@@ -40,6 +42,40 @@ public class BienDTO implements Serializable {
 	private String fecha4;
 	private String fecha5;
 	private String metodoRecepcion;
+	
+	
+	public BienDTO(Bien b) {
+		super();
+		this.codigo = b.getCodigo();
+		this.numeroOrden = b.getNumeroOrden();
+		this.id = b.getId();
+		this.numeroRecepcion = b.getNumeroRecepcion();
+		this.lineaRecepcion = b.getLineaRecepcion();
+		this.posicion = b.getPosicion();
+		this.cantidadRecibida = b.getCantidadRecibida();
+		this.neto = b.getNeto();
+		this.precioNeto = b.getPrecioNeto();
+		this.fechaEntrega = b.getFechaEntrega();
+		this.idUsuario = b.getIdUsuario();
+		this.codUsuario = b.getCodUsuario();
+		this.nombreUsuario = b.getNombreUsuario();
+		this.texto1 = b.getTexto1();
+		this.texto2 = b.getTexto2();
+		this.texto3 = b.getTexto3();
+		this.texto4 = b.getTexto4();
+		this.texto5 = b.getTexto5();
+		this.numerico1 = b.getNumerico1();
+		this.numerico2 = b.getNumerico2();
+		this.numerico3 = b.getNumerico3();
+		this.numerico4 = b.getNumerico4();
+		this.numerico5 = b.getNumerico5();
+		this.fecha1 = b.getFecha1();
+		this.fecha2 = b.getFecha2();
+		this.fecha3 = b.getFecha3();
+		this.fecha4 = b.getFecha4();
+		this.fecha5 = b.getFecha5();
+		this.metodoRecepcion = b.getMetodoRecepcion();
+	}
 	
 	public Long getCodigo() {
 		return codigo;

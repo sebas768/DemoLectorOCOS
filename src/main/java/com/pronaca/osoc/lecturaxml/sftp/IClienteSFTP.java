@@ -22,6 +22,20 @@ public interface IClienteSFTP {
 			int puertoSftp, String pathSftp, String pathDownload) throws Exception;
 
 	/**
+	 * 
+	 * @param nameFile
+	 * @param usuarioSftp
+	 * @param passwordSftp
+	 * @param servidorSftp
+	 * @param puertoSftp
+	 * @param pathSftp
+	 * @return
+	 * @throws Exception
+	 */
+	void deleteFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
+			int puertoSftp, String pathSftp) throws Exception;
+	
+	/**
 	 * Obtiene el listado de nombres
 	 * 
 	 * @param sistema

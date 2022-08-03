@@ -50,7 +50,6 @@ public abstract class ServiceXmlGeneric<T extends Serializable, Pk extends Seria
 		pkClass = (Class<Pk>) genericInterfaces[1];
 	}
 
-	// ************************METODOS CARGA IDB************************
 
 	@Override
 	public int actualizarEntidades(EstadoEnum estado, String columnEstatus) throws Exception {
@@ -153,7 +152,7 @@ public abstract class ServiceXmlGeneric<T extends Serializable, Pk extends Seria
 			case JDBCExceptionMapping.ESTADO_FAIL:
 				int exception = stmt.getInt(2);
 				mensajeError = stmt.getString(3);
-				throw new ValidaEntityException(mensajeError + " [Número excepción] " + exception);
+				throw new ValidaEntityException(mensajeError + " [Nï¿½mero excepciï¿½n] " + exception);
 			}
 			return new ReturnInfoCarga(stmt.getString(4), stmt.getString(3), stmt.getInt(2), stmt.getInt(1));
 		} catch (Exception ex) {
