@@ -113,6 +113,18 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 		}
 	}
 
+	public CabeceraOrden findByNumeroOrden(String numeroOrden) throws Exception{
+		try {
+			List<CabeceraOrden> ocos = cabeceraOrdenRepository.findByNumeroOrden(numeroOrden);
+			if (ocos != null && !ocos.isEmpty()) {
+				return ocos.get(0);
+			}else {
+				return null;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 	
 	@Override
 	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception {
@@ -128,6 +140,8 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 		}
 	}
 
+	
+		
 	@Override
 	public String delete(Long id)  throws Exception {
 		try {

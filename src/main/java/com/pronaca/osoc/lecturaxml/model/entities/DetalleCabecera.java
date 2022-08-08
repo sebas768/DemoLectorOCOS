@@ -26,6 +26,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.hibernate.annotations.Cascade; 
+import org.hibernate.annotations.CascadeType;
+
 /**
  * The persistent class for the LEC_DETALLE_CABECERA database table.
  */
@@ -60,7 +63,7 @@ public class DetalleCabecera implements Serializable {
 	// bidirectional many-to-one association
 	@XmlTransient
 	@ManyToOne
-	@JoinColumn(name = "DET_NUMERO_ORDEN", nullable = false)
+	@JoinColumn(name = "DET_NUMERO_ORDEN", nullable = false) 
 	@JsonBackReference
 	private CabeceraOrden cabeceraOrden;
 

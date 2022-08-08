@@ -1,5 +1,6 @@
 package com.pronaca.osoc.lecturaxml.loaderxml.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 	@Autowired
 	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
 	@Autowired
-	private ILecturaXmlService aplicaPromocionService;
+	private ILecturaXmlService lecturaXmlService;
 	@Autowired
 	private IArchivoXmlService archivoXmlService;
 
@@ -65,24 +66,27 @@ public class LoaderXmlImpl implements ILoaderXml {
 
 	@Override
 	public String loadXml() throws Exception {
-		System.out.println(" | Inicia LecturaXml - SFTP");
+		System.out.println(" --> Inicia LecturaXml - SFTP");
 		long tiempoInicio = System.currentTimeMillis();
 		List<String> nameFiles = clienteSFTP.getNameFiles(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(),
 				getPuertoSFTP(), getPathSFTP());
 		
+		//delete test 
+		//clienteSFTP.deleteFile(new Date(), getPathDownload(), getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(), getPuertoSFTP(), getPathSFTP());
+		
 		nameFiles.stream().forEach(file -> {
 			try {
 				if(!archivoXmlService.fileExist(file)) {
-					loadJob(file);
-				}
+					loadJob(file); 
+				} 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 		
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println(" | Finaliza LecturaXml - SFTP, Tiempo: " + tiempoInicio);
-		return "OK";
+		System.out.println(" --> Finaliza LecturaXml - SFTP, Tiempo: " + tiempoInicio); 
+		return "OK"; 
 	}
 
 	private String loadJob(String nameFile) throws Exception {
@@ -97,7 +101,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 			if (resp.getFileDownload() != null) {
 				
 				// TODO aqui llamar al servicio para guardar el archivo en blob
-				aplicaPromocionService.cargarXml(resp);
+				lecturaXmlService.cargarXml(resp);
 				// Lectura Xml
 				registros = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
 				
@@ -114,14 +118,14 @@ public class LoaderXmlImpl implements ILoaderXml {
 		try {
 			try {
 				if (registros != null && !registros.isEmpty()) {
-					registros.parallelStream().forEach(xml -> {
+					registros.stream().forEach(xml -> {
 						try {
 							if (xml != null) {
 								// Verifica si el entity es valido 
 								Boolean isValidEntity = xml.isValidEntiti();
 								if (isValidEntity) {
-									aplicaPromocionService.cargar(xml); 
-								}
+									lecturaXmlService.cargar(xml); 
+								} 
 							}
 						} catch (Exception e) {
 						}

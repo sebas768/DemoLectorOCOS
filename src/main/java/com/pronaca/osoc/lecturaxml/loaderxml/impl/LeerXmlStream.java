@@ -58,7 +58,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 					}
 				} catch (JAXBException jaxbe) {
 					existeRegistros = false;
-					jaxbe.printStackTrace();
+					jaxbe.printStackTrace(); 
 				} catch (XMLStreamException xmlste) {
 					existeRegistros = false;
 					xmlste.printStackTrace();
@@ -71,7 +71,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 			System.gc();
 			
 			if (respuestaFTP.getFileDownload().exists()) {
-				System.out.println(respuestaFTP.getFileDownload());
+				//System.out.println(respuestaFTP.getFileDownload());
 				if (respuestaFTP.getFileDownload().delete()) {
 					//AJUSTE DELETE FILES
 					System.out.println("BORRADO");

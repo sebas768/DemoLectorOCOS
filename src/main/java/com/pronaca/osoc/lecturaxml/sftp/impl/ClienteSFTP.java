@@ -7,9 +7,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jcraft.jsch.Channel;
@@ -21,11 +23,16 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
 import com.pronaca.osoc.lecturaxml.sftp.IClienteSFTP;
+import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
+
 
 @Service
 public class ClienteSFTP implements IClienteSFTP {
 
 	private Logger logger = LoggerFactory.getLogger(ClienteSFTP.class);
+	
+	@Autowired
+	private IArchivoXmlService archivoXmlService;
 
 	@Override
 	public synchronized RespuestaSFTP downloadFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
@@ -44,7 +51,7 @@ public class ClienteSFTP implements IClienteSFTP {
 					channelSftp.get(nameFile, outputStream);
 					respuesta.setNombreArchivo(nameFile);
 					respuesta.setTaminioArchivo(file.length());
-					respuesta.setFechaArchivo(new Date().getTime());
+					respuesta.setFechaArchivo(file.lastModified());
 					respuesta.setFileDownload(file);
 				} else
 					throw new Exception("No existe conección al SFTP");
@@ -58,30 +65,37 @@ public class ClienteSFTP implements IClienteSFTP {
 			return respuesta;
 		}
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public void deleteFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
+	public void deleteFile(Date date, String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
 			int puertoSftp, String pathSftp) throws Exception {
-		synchronized (this) {
+			System.out.println(" | Conectadose a SFTP para eliminar archivos inferiores a la fecha: " + date); 
+			int cantEliminados = 0;
 			ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
+			long time = date.getTime();
 			try {
 				if (channelSftp != null) { 
-					channelSftp.rm("/home/sftp/Alusta/DESA/100159411xml");
-					boolean success = true;
-				    if(success) {
-				    	System.out.println(" | SFTP, File delete success"); 
-				    }
-				} else
-					throw new Exception("No existe conección al SFTP");
-	
+					channelSftp.cd(pathSftp);
+					Vector<ChannelSftp.LsEntry> list = channelSftp.ls("*");
+					for (ChannelSftp.LsEntry entry : list) {
+						if((entry.getAttrs().getMTime() * 1000L) < time && archivoXmlService.fileExist(entry.getFilename())){
+							channelSftp.rm(entry.getFilename()); 
+							System.out.println(" | Archivo eliminado: " + entry.getFilename());
+							cantEliminados++;
+						}
+					}			
+				} else {
+					throw new Exception("No existe conección al SFTP");	
+				}
+				System.out.println(" | Se eliminaron: " + cantEliminados + " archivos del SFTP");
 			} catch (SftpException | IOException ex) {
 				logger.error("Error download file", ex);
 			} finally {
 				disconnectChannelSftp(channelSftp);
 			}
-		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getNameFiles(String usuarioSftp, String passwordSftp, String servidorSftp, int puertoSftp,

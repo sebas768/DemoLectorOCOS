@@ -119,19 +119,18 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
 	public void cargar(Transaccion ocos) throws Exception {
 		System.out.println(" | Persistencia Xml -Jpa");
 		CabeceraOrden cabecera = ocos.getCabecera();
-		cabeceraOrdenService.getByNumeroOrden("380050794");
 		cabeceraOrdenService.save(cabecera);
-		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();
+		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();  
 		if(detalle!=null && !detalle.isEmpty()) {
 			detalle.stream().forEach(det -> { 
 				try {
-					det.setCabeceraOrden(cabecera);
+					det.setCabeceraOrden(cabeceraOrdenService.findByNumeroOrden(ocos.getCabecera().getNumeroOrden()));
 					detalleCabeceraService.save(det); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				List<Bien> bienes = det.getBien();
-				if(bienes!=null && !bienes.isEmpty()) {
+				if(bienes!=null && !bienes.isEmpty()) { 
 					bienes.stream().forEach(b -> { 
 						b.setDetalleCabecera(det);
 						try { 
@@ -143,8 +142,8 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
 				}
 				List<Dimension> dimensiones = det.getDimension(); 
 				if(dimensiones!=null && !dimensiones.isEmpty()) {
-					dimensiones.stream().forEach(d -> {
-						d.setDetalleCabecera(det);
+					dimensiones.stream().forEach(d -> { 
+						d.setDetalleCabecera(det); 
 						try {
 							dimensionService.save(d);
 						} catch (Exception e) {

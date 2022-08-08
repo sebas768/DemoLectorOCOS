@@ -1,5 +1,6 @@
 package com.pronaca.osoc.lecturaxml.sftp;
 
+import java.util.Date;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
@@ -32,7 +33,7 @@ public interface IClienteSFTP {
 	 * @return
 	 * @throws Exception
 	 */
-	void deleteFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
+	void deleteFile(Date date, String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
 			int puertoSftp, String pathSftp) throws Exception;
 	
 	/**
