@@ -20,7 +20,10 @@ public class LecturaXmlController {
 	@Autowired
 	private ICabeceraOrdenService iCabeceraOrdenService;
 	
-
+	/**
+	 * 
+	 * @return
+	 */
 	@GetMapping("/lecturaXml/load")
 	public ResponseEntity<?> initLecturaXml() {
 		try {
@@ -31,7 +34,12 @@ public class LecturaXmlController {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param numeroOrden
+	 * @param estado
+	 * @return
+	 */
 	@GetMapping("/lecturaXml/updateStatus")
 	public ResponseEntity<?> updateStatus(@RequestParam("n") String numeroOrden,
 										  @RequestParam("s") EstadoEnum estado) {
@@ -43,6 +51,11 @@ public class LecturaXmlController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param numeroOrden
+	 * @return
+	 */
 	@GetMapping("/lecturaXml/getOcos")
 	public ResponseEntity<?> getOcos(@RequestParam("n") String numeroOrden) {
 		try {

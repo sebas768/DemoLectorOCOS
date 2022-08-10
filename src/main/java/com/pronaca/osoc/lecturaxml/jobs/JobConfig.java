@@ -38,12 +38,12 @@ public class JobConfig implements SchedulingConfigurer {
 	}
 
 	@Override
-	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-		taskRegistrar.setScheduler(taskExecutor());
-		taskRegistrar.addTriggerTask(new Runnable() {
+	public void configureTasks(ScheduledTaskRegistrar taskLecturaXml) {
+		taskLecturaXml.setScheduler(taskExecutor());
+		taskLecturaXml.addTriggerTask(new Runnable() {
 			@Override
 			public void run() {
-				log.info("Ejecuta Cron...");
+				log.info("Ejecuta Cron - Lectura XML SFTP...");
 				try {
 					iLoaderxML.loadXml();
 				} catch (Exception e) {
@@ -56,11 +56,46 @@ public class JobConfig implements SchedulingConfigurer {
 				Calendar nextExecutionTime = new GregorianCalendar();
 				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 				Calendar fechaInicio = GregorianCalendar.getInstance();
-				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH),
-							    fechaInicio.get(Calendar.DAY_OF_MONTH), 0, 2);
-				fechaInicio.add(Calendar.MINUTE, 30);
+				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 2, 0, 0);
+					System.out.println("Inicia lectura");
+					System.out.println(fechaInicio.getTime().toString());
+					System.out.println("Inicia anterior lectura");
+					System.out.println(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
 				nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
-				nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently", Integer.class));
+				nextExecutionTime.add(Calendar.MINUTE, env.getProperty("job.frecuently.lectura", Integer.class));
+				if (nextExecutionTime.get(Calendar.HOUR_OF_DAY) == 1) {
+					nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently.add", Integer.class));
+				}
+					System.out.println("Inicia nueva lectura");
+					System.out.println(nextExecutionTime.getTime());
+				return nextExecutionTime.getTime();
+			}
+		});
+		taskLecturaXml.addTriggerTask(new Runnable() {
+			@Override
+			public void run() {
+				log.info("Ejecuta Cron - Delete files SFTP...");
+				try {
+					iLoaderxML.deleteXml(); 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}, new Trigger() {
+			@Override
+			public Date nextExecutionTime(TriggerContext triggerContext) {
+				Calendar nextExecutionTime = new GregorianCalendar();
+				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
+				Calendar fechaInicio = GregorianCalendar.getInstance();
+				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 11, 10, 0);
+					System.out.println("Inicia delete");
+					System.out.println(fechaInicio.getTime().toString());
+					System.out.println("Inicia anterior delete");
+					System.out.println(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
+				nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
+				nextExecutionTime.add(Calendar.MINUTE, env.getProperty("job.frecuently.delete", Integer.class));
+					System.out.println("Inicia nueva delete");
+					System.out.println((nextExecutionTime.getTime()));
 				return nextExecutionTime.getTime();
 			}
 		});

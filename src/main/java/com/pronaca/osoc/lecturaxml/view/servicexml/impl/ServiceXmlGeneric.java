@@ -50,7 +50,6 @@ public abstract class ServiceXmlGeneric<T extends Serializable, Pk extends Seria
 		pkClass = (Class<Pk>) genericInterfaces[1];
 	}
 
-
 	@Override
 	public int actualizarEntidades(EstadoEnum estado, String columnEstatus) throws Exception {
 		try {

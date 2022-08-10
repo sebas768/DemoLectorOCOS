@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -37,7 +36,7 @@ public class ClienteSFTP implements IClienteSFTP {
 	@Override
 	public synchronized RespuestaSFTP downloadFile(String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
 			int puertoSftp, String pathSftp, String pathDownload) throws Exception {
-		System.out.println(" | File Name Download: " + nameFile); 
+		System.out.println(" | ==> File Name Download: " + nameFile); 
 		synchronized (this) {
 			ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
 			RespuestaSFTP respuesta = new RespuestaSFTP(); 
@@ -81,7 +80,7 @@ public class ClienteSFTP implements IClienteSFTP {
 					for (ChannelSftp.LsEntry entry : list) {
 						if((entry.getAttrs().getMTime() * 1000L) < time && archivoXmlService.fileExist(entry.getFilename())){
 							channelSftp.rm(entry.getFilename()); 
-							System.out.println(" | Archivo eliminado: " + entry.getFilename());
+							System.out.println(" | # Archivo eliminado: " + entry.getFilename());
 							cantEliminados++;
 						}
 					}			
@@ -106,21 +105,18 @@ public class ClienteSFTP implements IClienteSFTP {
 		try {
 			if (channelSftp != null) {
 				channelSftp.cd(pathSftp);
-				channelSftp.ls(pathSftp).parallelStream().forEach(c -> {
-					LsEntry entry = (LsEntry) c;
-					// System.out.println(String.format("%1s ----> %2s", entry.getLongname(), entry.getFilename()));
-					if (entry.getLongname().contains("-rw-r--r--"))
-						nameFiles.add(entry.getFilename());
-				});
+				Vector<ChannelSftp.LsEntry> list = channelSftp.ls("*");
+				for (ChannelSftp.LsEntry entry : list) {
+					nameFiles.add(entry.getFilename()); 
+				}
 			} else
-				throw new Exception("No existe conección al SFTP");
+				throw new Exception("No existe conección al SFTP"); 
 
 		} catch (SftpException ex) {
-			logger.error("Error download file", ex);
+			logger.error("Error get filenames", ex);
 		} finally {
 			disconnectChannelSftp(channelSftp);
 		}
-
 		return nameFiles;
 	}
 

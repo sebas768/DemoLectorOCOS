@@ -69,14 +69,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 		} finally {
 			xmlr.close();
 			System.gc();
-			
-			if (respuestaFTP.getFileDownload().exists()) {
-				//System.out.println(respuestaFTP.getFileDownload());
-				if (respuestaFTP.getFileDownload().delete()) {
-					//AJUSTE DELETE FILES
-					System.out.println("BORRADO");
-				} 
-			}
+			//delete file
 		}
 		return registros;
 	}

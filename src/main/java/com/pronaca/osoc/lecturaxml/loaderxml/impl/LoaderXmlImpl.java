@@ -1,5 +1,8 @@
 package com.pronaca.osoc.lecturaxml.loaderxml.impl;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -21,16 +24,20 @@ public class LoaderXmlImpl implements ILoaderXml {
 
 	@Autowired
 	private IParametroGeneralService generalService;
+	
 	@Autowired
 	private IClienteSFTP clienteSFTP;
+	
 	@Autowired
 	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
+	
 	@Autowired
 	private ILecturaXmlService lecturaXmlService;
+	
 	@Autowired
 	private IArchivoXmlService archivoXmlService;
 
-	protected List<Transaccion> registros;
+	protected List<Transaccion> ocosData;
 
 	@Override
 	public String getPasswordSFTP() throws Exception {
@@ -66,66 +73,73 @@ public class LoaderXmlImpl implements ILoaderXml {
 
 	@Override
 	public String loadXml() throws Exception {
-		System.out.println(" --> Inicia LecturaXml - SFTP");
+		System.out.println(" --> Inicia LecturaXml - SFTP ");
 		long tiempoInicio = System.currentTimeMillis();
 		List<String> nameFiles = clienteSFTP.getNameFiles(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(),
 				getPuertoSFTP(), getPathSFTP());
-		
-		//delete test 
-		//clienteSFTP.deleteFile(new Date(), getPathDownload(), getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(), getPuertoSFTP(), getPathSFTP());
-		
 		nameFiles.stream().forEach(file -> {
 			try {
-				if(!archivoXmlService.fileExist(file)) {
-					loadJob(file); 
-				} 
+				if (file != null) {
+					if(!archivoXmlService.fileExist(file)) {
+						loadJob(file); 
+					} 
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
+		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
+		System.out.println(" --> Finaliza LecturaXml - SFTP, Tiempo de ejecución: " + tiempoInicio); 
+		return "OK"; 
+	}
+	
+	@Override
+	public String deleteXml() throws Exception {
+		long tiempoInicio = System.currentTimeMillis();
+		clienteSFTP.deleteFile(new Date(), getPathDownload(), getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(), getPuertoSFTP(), getPathSFTP());
 		
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println(" --> Finaliza LecturaXml - SFTP, Tiempo: " + tiempoInicio); 
+		System.out.println(" --> Finaliza borrado archivos - SFTP, Tiempo de ejecución: " + tiempoInicio); 
 		return "OK"; 
 	}
 
 	private String loadJob(String nameFile) throws Exception {
-		getLeerXmlStream(nameFile);
-		return uploadData(nameFile); 
+		return uploadData(getLeerXmlStream(nameFile)); 
 	} 
 
-	public void getLeerXmlStream(String nameFile) throws Exception {
+	public RespuestaSFTP getLeerXmlStream(String nameFile) throws Exception {
 		try {
 			RespuestaSFTP resp = clienteSFTP.downloadFile(nameFile, getUsuarioSFTP(), getPasswordSFTP(),
 					getServidorSFTP(), getPuertoSFTP(), getPathSFTP(), getPathDownload());
 			if (resp.getFileDownload() != null) {
-				
-				// TODO aqui llamar al servicio para guardar el archivo en blob
-				lecturaXmlService.cargarXml(resp);
-				// Lectura Xml
-				registros = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
-				
+				//Lectura Xml
+				ocosData = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
+				return resp;
 			}
+			return null;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	protected String uploadData(String nameFile) throws Exception {
+	protected String uploadData(RespuestaSFTP resp) throws Exception {
 		long tiempoInicio = System.currentTimeMillis();
 		StringBuilder retorno = new StringBuilder();
-
 		try {
 			try {
-				if (registros != null && !registros.isEmpty()) {
-					registros.stream().forEach(xml -> {
+				if (ocosData != null && !ocosData.isEmpty()) {
+					ocosData.stream().forEach(xml -> {
 						try {
 							if (xml != null) {
 								// Verifica si el entity es valido 
 								Boolean isValidEntity = xml.isValidEntiti();
+								Boolean isSaveXml = false;
 								if (isValidEntity) {
-									lecturaXmlService.cargar(xml); 
+									isSaveXml = lecturaXmlService.cargarData(xml); 
 								} 
+								if (isSaveXml) {
+									lecturaXmlService.cargarXml(resp); 
+								}
 							}
 						} catch (Exception e) {
 						}
@@ -133,19 +147,25 @@ public class LoaderXmlImpl implements ILoaderXml {
 				}
 			} catch (Exception e) {
 				retorno.append("Error al transferir valores desde XML a JPA ");
-				retorno.append(" ");
+				retorno.append(" "); 
 				retorno.append(e.getMessage());
 				throw e;
 			}
 		} catch (Exception e) {
-
 			throw e;
 		} finally {
 			System.gc();
 		}
-		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println(" | Finaliza lectura " + nameFile + ", Tiempo: " + tiempoInicio);
 		
+		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
+		String nameFile = resp!=null?resp.getNombreArchivo():"";
+		Path path = Paths.get(resp.getFileDownload().getPath());
+		if (Files.deleteIfExists(path)) {
+			System.out.println(" | # Delete file xml ");
+		} 
+		System.out.println(" | Finaliza lectura " + nameFile + ", Tiempo: " + tiempoInicio);
+
 		return retorno.toString();
 	}
+	
 }

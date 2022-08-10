@@ -16,6 +16,16 @@ public class CabeceraOrdenController {
 	@Autowired
 	private ICabeceraOrdenService iCebeceraOrdenService;
 
+	/**
+	 * 
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param codigo
+	 * @param codProveedor
+	 * @param empresa
+	 * @param estado
+	 * @return
+	 */
 	@GetMapping("/cabecera/searchByParameters")
 	public ResponseEntity<?> searchByParameters(@RequestParam("fi")String fechaInicio, 
 												@RequestParam("fn")String fechaFin,
@@ -32,7 +42,7 @@ public class CabeceraOrdenController {
 	}
 	
 	/**
-	 * Term
+	 * 
 	 * @return
 	 */
 	@GetMapping("/cabecera/getAll")

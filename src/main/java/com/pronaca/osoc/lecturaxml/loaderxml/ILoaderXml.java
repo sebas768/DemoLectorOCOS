@@ -43,5 +43,12 @@ public interface ILoaderXml {
 	 * @throws Exception
 	 */
 	public abstract String loadXml() throws Exception;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public abstract String deleteXml() throws Exception;
 
 }

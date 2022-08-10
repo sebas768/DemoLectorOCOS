@@ -10,7 +10,7 @@ public interface ILecturaXmlService  extends IServiceXmlGeneric<Transaccion, Lon
 	 * @param t
 	 * @throws Exception
 	 */
-	void cargar(Transaccion t) throws Exception;
+	Boolean cargarData(Transaccion t) throws Exception;
 	
 	/**
 	 * 
