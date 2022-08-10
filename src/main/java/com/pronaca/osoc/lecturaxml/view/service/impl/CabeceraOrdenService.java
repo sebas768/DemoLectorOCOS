@@ -127,9 +127,9 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 	}
 	
 	@Override
-	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception {
+	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String rucProveedor, String codEmpresa, EstadoEnum estado) throws Exception {
 		try {
-			List<CabeceraOrden> ocos = cabeceraOrdenRepository.findByParametros(fechaInicio, fechaFin, codigo, codProveedor, empresa, estado);
+			List<CabeceraOrden> ocos = cabeceraOrdenRepository.findByParametros(fechaInicio, fechaFin, codigo, codProveedor, rucProveedor, codEmpresa, estado);
 			if (ocos != null && !ocos.isEmpty()) {
 				return ocos;
 			}else {

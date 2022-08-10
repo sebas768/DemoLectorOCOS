@@ -31,10 +31,11 @@ public class CabeceraOrdenController {
 												@RequestParam("fn")String fechaFin,
 												@RequestParam("c")String codigo,
 												@RequestParam("p")String codProveedor,
-												@RequestParam("e")String empresa, 
+												@RequestParam("r")String rucProveedor,
+												@RequestParam("e")String codEmpresa, 
 												@RequestParam("s")EstadoEnum estado) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(iCebeceraOrdenService.searchByParameters(fechaInicio, fechaFin, codigo, codProveedor, empresa, estado));
+			return ResponseEntity.status(HttpStatus.OK).body(iCebeceraOrdenService.searchByParameters(fechaInicio, fechaFin, codigo, codProveedor, rucProveedor, codEmpresa, estado));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.GONE).body(e.getMessage());

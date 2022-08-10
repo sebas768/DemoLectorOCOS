@@ -38,7 +38,7 @@ public class FileXmlUtil {
 		double size_gb = size_mb / 1024 ;
  
 		if (size_gb > 1){
-			size = Math.round(size_gb*100.00)/100.00 + " GB";
+			size = Math.round(size_gb*100.00)/100.00 + " GB"; 
         }else if(size_mb > 1){ 
         	size = Math.round(size_mb*100.00)/100.00 + " MB";
         }else{

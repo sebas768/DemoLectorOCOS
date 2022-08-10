@@ -48,7 +48,7 @@ public interface ICabeceraOrdenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String empresa, EstadoEnum estado) throws Exception;
+	public List<CabeceraOrden> searchByParameters(String fechaInicio, String fechaFin, String codigo, String codProveedor, String rucProveedor, String codEmpresa, EstadoEnum estado) throws Exception;
 		
 	/**
 	 * 
