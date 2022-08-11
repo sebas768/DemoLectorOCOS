@@ -11,7 +11,6 @@ import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
 
 public class FileXmlUtil {
 	
-		
 	public Blob fileToBlob(RespuestaSFTP resp) throws IOException {
 		try {
 			
@@ -58,6 +57,5 @@ public class FileXmlUtil {
 	    fis.close();
 	    return bytes;
 	}
-	
 	
 }

@@ -64,12 +64,42 @@ public class ClienteSFTP implements IClienteSFTP {
 			return respuesta;
 		}
 	}
+	
+	@Override
+	public synchronized RespuestaSFTP downloadListFiles(String nameFile, String pathSftp, String pathDownload, ChannelSftp channelSftp) throws Exception {
+		System.out.println(" | ==> File Name Download: " + nameFile); 
+		synchronized (this) {
+			RespuestaSFTP respuesta = new RespuestaSFTP(); 
+			OutputStream outputStream;
+			try {
+				if (channelSftp != null) { 
+					channelSftp.cd(pathSftp);
+					File file = new File(pathDownload + nameFile);
+					outputStream = new FileOutputStream(file);
+					this.mkdirs(pathDownload + nameFile);
+					channelSftp.get(nameFile, outputStream);
+					respuesta.setNombreArchivo(nameFile);
+					respuesta.setTaminioArchivo(file.length());
+					respuesta.setFechaArchivo(file.lastModified());
+					respuesta.setFileDownload(file);
+				} else
+					throw new Exception("No existe conección al SFTP");
+	
+			} catch (SftpException | IOException ex) {
+				logger.error("Error download file", ex);
+			} finally {
+				
+			}
+	
+			return respuesta;
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteFile(Date date, String nameFile, String usuarioSftp, String passwordSftp, String servidorSftp,
 			int puertoSftp, String pathSftp) throws Exception {
-			System.out.println(" | Conectadose a SFTP para eliminar archivos inferiores a la fecha: " + date); 
+			System.out.println(" --> Conectadose a SFTP para eliminar archivos inferiores a la fecha: " + date); 
 			int cantEliminados = 0;
 			ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
 			long time = date.getTime();
@@ -99,7 +129,7 @@ public class ClienteSFTP implements IClienteSFTP {
 	@Override
 	public List<String> getNameFiles(String usuarioSftp, String passwordSftp, String servidorSftp, int puertoSftp,
 			String pathSftp) throws Exception {
-		System.out.println(" | Read directory filenames"); 
+		System.out.println(" | ==> Read directory filenames"); 
 		ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
 		List<String> nameFiles = new ArrayList<>();
 		try {
@@ -120,10 +150,21 @@ public class ClienteSFTP implements IClienteSFTP {
 		return nameFiles;
 	}
 
+	public ChannelSftp createChannel(String usuarioSftp, String passwordSftp, String servidorSftp, int puertoSftp) throws Exception{
+		ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
+		if (channelSftp != null) {
+			return channelSftp;
+		}
+		return null;
+	}
+	
+	public void disconnectChannel(ChannelSftp channelSftp)throws Exception{
+		disconnectChannelSftp(channelSftp);
+	}
+	
 	private synchronized ChannelSftp createChannelSftp(String username, String password, String host, Integer sessionTimeout,
 			int port, Integer channelTimeout) {
 		try {
-			
 			synchronized (this) {
 				JSch jSch = new JSch();
 				Session session = jSch.getSession(username, host, port);
@@ -134,7 +175,6 @@ public class ClienteSFTP implements IClienteSFTP {
 				channel.connect(channelTimeout);
 				return (ChannelSftp) channel;
 			}  
-			
 		} catch (JSchException ex) {
 			logger.error("Create ChannelSftp error", ex);
 			ex.printStackTrace();

@@ -57,7 +57,6 @@ public class FechaUtil {
 		return "";
 	}
 	
-	
 	public static String aplicarFromato(Date fecha, String formato) {
 		SimpleDateFormat formatter = new SimpleDateFormat(formato, new Locale("es"));
 		return fecha == null ? "" : formatter.format(fecha);

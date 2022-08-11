@@ -87,7 +87,7 @@ public class JobConfig implements SchedulingConfigurer {
 				Calendar nextExecutionTime = new GregorianCalendar();
 				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 				Calendar fechaInicio = GregorianCalendar.getInstance();
-				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 11, 10, 0);
+				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 11, 0, 0);
 					System.out.println("Inicia delete");
 					System.out.println(fechaInicio.getTime().toString());
 					System.out.println("Inicia anterior delete");

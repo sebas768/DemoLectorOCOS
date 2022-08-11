@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jcraft.jsch.ChannelSftp;
 import com.pronaca.osoc.lecturaxml.loaderxml.ILeerXmlStream;
 import com.pronaca.osoc.lecturaxml.loaderxml.ILoaderXml;
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
@@ -29,14 +30,14 @@ public class LoaderXmlImpl implements ILoaderXml {
 	private IClienteSFTP clienteSFTP;
 	
 	@Autowired
-	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
-	
-	@Autowired
 	private ILecturaXmlService lecturaXmlService;
 	
 	@Autowired
 	private IArchivoXmlService archivoXmlService;
-
+	
+	@Autowired
+	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
+	
 	protected List<Transaccion> ocosData;
 
 	@Override
@@ -68,20 +69,20 @@ public class LoaderXmlImpl implements ILoaderXml {
 		return generalService.getString(Constantes.PK_RUTA_DESCARGAR);
 	}
 
-	public LoaderXmlImpl() {
-	}
+	public LoaderXmlImpl() {}
 
 	@Override
 	public String loadXml() throws Exception {
-		System.out.println(" --> Inicia LecturaXml - SFTP ");
+		System.out.println(" --> INICIA LECTURA XML - SFTP ");
 		long tiempoInicio = System.currentTimeMillis();
 		List<String> nameFiles = clienteSFTP.getNameFiles(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(),
 				getPuertoSFTP(), getPathSFTP());
+		ChannelSftp channelSftp = clienteSFTP.createChannel(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(), getPuertoSFTP());
 		nameFiles.stream().forEach(file -> {
 			try {
 				if (file != null) {
 					if(!archivoXmlService.fileExist(file)) {
-						loadJob(file); 
+						loadJob(file, channelSftp); 
 					} 
 				}
 			} catch (Exception e) {
@@ -89,7 +90,8 @@ public class LoaderXmlImpl implements ILoaderXml {
 			}
 		});
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println(" --> Finaliza LecturaXml - SFTP, Tiempo de ejecución: " + tiempoInicio); 
+		System.out.println(" --> FINALIZA LECTURA XML - SFTP, Tiempo de ejecución: " + tiempoInicio); 
+		clienteSFTP.disconnectChannel(channelSftp);
 		return "OK"; 
 	}
 	
@@ -97,14 +99,13 @@ public class LoaderXmlImpl implements ILoaderXml {
 	public String deleteXml() throws Exception {
 		long tiempoInicio = System.currentTimeMillis();
 		clienteSFTP.deleteFile(new Date(), getPathDownload(), getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(), getPuertoSFTP(), getPathSFTP());
-		
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
 		System.out.println(" --> Finaliza borrado archivos - SFTP, Tiempo de ejecución: " + tiempoInicio); 
 		return "OK"; 
 	}
 
-	private String loadJob(String nameFile) throws Exception {
-		return uploadData(getLeerXmlStream(nameFile)); 
+	private String loadJob(String nameFile, ChannelSftp channelSftp) throws Exception {
+		return uploadData(getLeerXmlStream(nameFile, channelSftp)); 
 	} 
 
 	public RespuestaSFTP getLeerXmlStream(String nameFile) throws Exception {
@@ -122,6 +123,20 @@ public class LoaderXmlImpl implements ILoaderXml {
 		}
 	}
 
+	public RespuestaSFTP getLeerXmlStream(String nameFile, ChannelSftp channelSftp) throws Exception {
+		try {
+			RespuestaSFTP resp = clienteSFTP.downloadListFiles(nameFile, getPathSFTP(), getPathDownload(), channelSftp);
+			if (resp.getFileDownload() != null) {
+				//Lectura Xml
+				ocosData = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
+				return resp;
+			}
+			return null;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	protected String uploadData(RespuestaSFTP resp) throws Exception {
 		long tiempoInicio = System.currentTimeMillis();
 		StringBuilder retorno = new StringBuilder();
@@ -161,7 +176,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 		String nameFile = resp!=null?resp.getNombreArchivo():"";
 		Path path = Paths.get(resp.getFileDownload().getPath());
 		if (Files.deleteIfExists(path)) {
-			System.out.println(" | # Delete file xml ");
+			System.out.println(" # Delete file xml ");
 		} 
 		System.out.println(" | Finaliza lectura " + nameFile + ", Tiempo: " + tiempoInicio);
 
