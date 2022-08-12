@@ -100,7 +100,6 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
 	@Override
 	@Transactional
 	public void cargarXml(RespuestaSFTP resp) throws Exception {
-		System.out.println(" | Save archivo Xml");
 		archivoXmlService.save(resp, EstadoEnum.CARGADO); 
 	}
 	

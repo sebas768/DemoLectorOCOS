@@ -1,5 +1,6 @@
 package com.pronaca.osoc.lecturaxml.view.service.impl;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -75,12 +76,15 @@ public class ArchivoXmlService implements IArchivoXmlService {
 			xml.setFechaArchivo(new Date (resp.getFechaArchivo()));
 			xml.setPesoArchivo(ob.convertSize(resp.getTaminioArchivo()));
 			xml.setEstadoCarga(status.toString()); 
-			//aplicaPromocionService.cargarXml(resp);
-			//obj.fileToBlob(resp);
-			//xml.setContentBlob(obj.fileToBlob(resp));
+			Blob fileBlob = ob.fileToBlob(resp);
+			if (fileBlob != null) {
+				xml.setContentBlob(fileBlob); 
+			}
 			archivoXmlRepository.save(xml);
+			System.out.println(" | Save file xml as BLOB"); 
 			return "OK";
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 	}

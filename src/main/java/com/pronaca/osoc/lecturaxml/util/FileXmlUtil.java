@@ -4,32 +4,33 @@ package com.pronaca.osoc.lecturaxml.util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Blob;
-import java.sql.SQLException;
+import org.hibernate.engine.jdbc.BlobProxy;
 
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
 
 
 public class FileXmlUtil {
 	
-	public Blob fileToBlob(RespuestaSFTP resp) throws IOException {
-		try {
-			
-			Blob fileBlob = null;
-			boolean x = false;
-			if(x) {
-				byte[] fileBytes = getBytesFromFile(resp);
-				fileBlob.truncate(0);
-				fileBlob.setBytes(1, fileBytes);
-				System.out.println("OK BLOB");
-			}
+    /**
+     * Generates a BlobImpl proxy using byte data.
+     * 
+     * @param resp
+     * @return
+     * @throws Exception
+     */
+	public Blob fileToBlob(RespuestaSFTP resp) throws Exception {
+		Blob fileBlob = BlobProxy.generateProxy(getBytesFromFile(resp)); //The data to be created as a Blob
+		if (fileBlob != null) {
 			return fileBlob;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		} return null;
+		
 	}
 	
+	/**
+	 * 
+	 * @param sizeFile
+	 * @return
+	 */
 	public String convertSize(long sizeFile) {
 		String size;
 		double size_kb = sizeFile /1024;
@@ -46,6 +47,12 @@ public class FileXmlUtil {
 		return size; 
 	}
 	
+	/**
+	 * 
+	 * @param resp
+	 * @return
+	 * @throws IOException
+	 */
 	private byte[] getBytesFromFile(RespuestaSFTP resp) throws IOException {
 	    FileInputStream fis = new FileInputStream(resp.getFileDownload());
 	    byte[] bytes = new byte[(int) resp.getFileDownload().length()];

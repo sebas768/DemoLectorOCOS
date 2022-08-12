@@ -23,7 +23,7 @@ public class JDBCUtils {
 	 */
 	private static final Logger LOG = LoggerFactory.getLogger(JDBCUtils.class);
 
-	public static final String DATASOURCE_NAME = "jdbc/mediador";
+	public static final String DATASOURCE_NAME = "jdbc/sisocos";
 
 	/**
 	 * Constante que representa el valor de si en la invocacion a un stored procedure
@@ -68,7 +68,7 @@ public class JDBCUtils {
 			return dataSource.getConnection();
 		} catch (NamingException ex) {
 			LOG.error(ex.getMessage());
-			throw new Exception("Error en la b�squeda JNDI de la conexi�n");
+			throw new Exception("Error en la busqueda JNDI de la conexi�n");
 		}
 	}
 

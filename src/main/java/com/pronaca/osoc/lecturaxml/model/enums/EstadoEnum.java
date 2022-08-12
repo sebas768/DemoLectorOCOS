@@ -1,8 +1,10 @@
 package com.pronaca.osoc.lecturaxml.model.enums;
 
 public enum EstadoEnum implements Identificable<EstadoEnum>{
-	ACTIVO("ACTIVO"), INACTIVO("INACTIVO"), ACT("ACT"), INA("INA"), SI("Si"), NO("No"), 
-	PENDIENTE_REVISION("PENDIENTE_REVISION"), PROCESADA("PROCESADA"), TODOS("TODOS"), CARGADO("CARGADO");
+	
+	ACTIVO("ACTIVO"), INACTIVO("INACTIVO"), ACT("ACT"), INA("INA"), SI("Si"), NO("No"),
+	
+	PENDIENTE_REVISION("PENDIENTE_REVISION"), PROCESADA("PROCESADA"), CARGADO("CARGADO");
 
 	private String descripcion;
 

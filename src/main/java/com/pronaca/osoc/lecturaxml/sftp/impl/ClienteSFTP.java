@@ -144,7 +144,7 @@ public class ClienteSFTP implements IClienteSFTP {
 
 		} catch (SftpException ex) {
 			logger.error("Error get filenames", ex);
-		} finally {
+		} finally { 
 			disconnectChannelSftp(channelSftp);
 		}
 		return nameFiles;

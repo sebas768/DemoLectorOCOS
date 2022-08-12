@@ -48,7 +48,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 				try { 
 					if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT) {
 						JAXBElement<T> pt = unmarshaller.unmarshal(xmlr, entity);
-						T retorno = pt.getValue();
+						T retorno = pt.getValue(); 
 						registros.add(retorno);
 						if (xmlr.getEventType() == XMLStreamConstants.CHARACTERS) {
 							xmlr.next();
