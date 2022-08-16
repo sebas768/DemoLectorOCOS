@@ -2,10 +2,14 @@ plugins {
 	id 'org.springframework.boot' version '2.6.9'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'pmd'
+    id 'org.sonarqube' version '3.0'
+    id 'org.owasp.dependencycheck' version '6.0.5'
 }
 
-group = 'com.pronaca'
-version = '0.0.1-SNAPSHOT'
+group = 'pronaca-lectorXML-apiOCOS'
+//LUC: 15-08-2022 Levantamiento inicial del proyecto (SANDOVAL, ALEX) 
+version = '1.0.0-dev'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -19,9 +23,62 @@ dependencies {
 	implementation 'com.jcraft:jsch:0.1.55'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    
+    // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-starter
+    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '10.0.2'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20200518'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:10.0.2"
+    }
+}
+
+tasks.register("printVersion") {
+    doLast {
+        println project.version
+    }
+}
+
+tasks.register("printProjectName") {
+    doLast {
+        println project.group
+    }
+}
+
+def registry = 'cddnpro.pronaca.com'
+
+tasks.register("printRegistry") {
+    doLast {
+        println "${registry}"
+    }
+}
+
+/*pmd {
+    rulePriority = 1
+}*/
+
+sonarqube {
+    properties {
+        property 'sonar.sourceEncoding', 'UTF-8'
+    }
+}
+
+jar {
+    baseName = 'pronaca-lectorXML-apiOCOS'
 }

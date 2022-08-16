@@ -13,6 +13,6 @@ public @interface Sistema {
 
 	public boolean activoCarga() default true;
 
-	public String dataSourceName() default "jdbc/b2b";
+	public String dataSourceName() default "jdbc/sisocos";
 
 }

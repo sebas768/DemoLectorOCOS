@@ -26,8 +26,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.hibernate.annotations.Cascade; 
-import org.hibernate.annotations.CascadeType;
 
 /**
  * The persistent class for the LEC_DETALLE_CABECERA database table.

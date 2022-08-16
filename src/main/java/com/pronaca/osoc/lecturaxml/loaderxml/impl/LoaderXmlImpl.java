@@ -13,7 +13,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.pronaca.osoc.lecturaxml.loaderxml.ILeerXmlStream;
 import com.pronaca.osoc.lecturaxml.loaderxml.ILoaderXml;
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
-import com.pronaca.osoc.lecturaxml.model.xml.Transaccion;
+import com.pronaca.osoc.lecturaxml.model.xml.ModelOcos;
 import com.pronaca.osoc.lecturaxml.sftp.IClienteSFTP;
 import com.pronaca.osoc.lecturaxml.util.Constantes;
 import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
@@ -36,9 +36,9 @@ public class LoaderXmlImpl implements ILoaderXml {
 	private IArchivoXmlService archivoXmlService;
 	
 	@Autowired
-	private ILeerXmlStream<Transaccion, String> iLeerXmlStream;
+	private ILeerXmlStream<ModelOcos, String> iLeerXmlStream;
 	
-	protected List<Transaccion> ocosData;
+	protected List<ModelOcos> ocosData;
 
 	@Override
 	public String getPasswordSFTP() throws Exception {
@@ -114,7 +114,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 					getServidorSFTP(), getPuertoSFTP(), getPathSFTP(), getPathDownload());
 			if (resp.getFileDownload() != null) {
 				//Lectura Xml
-				ocosData = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
+				ocosData = iLeerXmlStream.obtenerDatos(resp, ModelOcos.class);
 				return resp;
 			}
 			return null;
@@ -128,7 +128,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 			RespuestaSFTP resp = clienteSFTP.downloadListFiles(nameFile, getPathSFTP(), getPathDownload(), channelSftp);
 			if (resp.getFileDownload() != null) {
 				//Lectura Xml
-				ocosData = iLeerXmlStream.obtenerDatos(resp, Transaccion.class);
+				ocosData = iLeerXmlStream.obtenerDatos(resp, ModelOcos.class);
 				return resp;
 			}
 			return null;

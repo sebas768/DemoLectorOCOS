@@ -1,16 +1,16 @@
 package com.pronaca.osoc.lecturaxml.view.servicexml;
 
 import com.pronaca.osoc.lecturaxml.model.dto.RespuestaSFTP;
-import com.pronaca.osoc.lecturaxml.model.xml.Transaccion;
+import com.pronaca.osoc.lecturaxml.model.xml.ModelOcos;
 
-public interface ILecturaXmlService  extends IServiceXmlGeneric<Transaccion, Long>{
+public interface ILecturaXmlService  extends IServiceXmlGeneric<ModelOcos, Long>{
 
 	/**
 	 * 
 	 * @param t
 	 * @throws Exception
 	 */
-	Boolean cargarData(Transaccion t) throws Exception;
+	Boolean cargarData(ModelOcos t) throws Exception;
 	
 	/**
 	 * 

@@ -16,7 +16,7 @@ import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.model.enums.OperacionCRUDEnum;
-import com.pronaca.osoc.lecturaxml.model.xml.Transaccion;
+import com.pronaca.osoc.lecturaxml.model.xml.ModelOcos;
 import com.pronaca.osoc.lecturaxml.view.service.IArchivoXmlService;
 import com.pronaca.osoc.lecturaxml.view.service.IBienService;
 import com.pronaca.osoc.lecturaxml.view.service.ICabeceraOrdenService;
@@ -25,7 +25,7 @@ import com.pronaca.osoc.lecturaxml.view.service.IDimensionService;
 import com.pronaca.osoc.lecturaxml.view.servicexml.ILecturaXmlService;
 
 @Service
-public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
+public class LecturaXmlServiceImpl extends ServiceXmlGeneric<ModelOcos, Long>
 		implements ILecturaXmlService {
 
 	private static final long serialVersionUID = -8838186957518713588L;
@@ -51,14 +51,14 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<Transaccion, Long>
 	}
 
 	@Override
-	public Boolean validateOperationLoader(Transaccion o, OperacionCRUDEnum operacion)
+	public Boolean validateOperationLoader(ModelOcos o, OperacionCRUDEnum operacion)
 			throws ValidaEntityException, NotFundEntityException {
 		return super.validateOperationLoader(o, operacion);
 	}
 
 	@Override
 	@Transactional
-	public Boolean cargarData(Transaccion ocos) throws Exception {
+	public Boolean cargarData(ModelOcos ocos) throws Exception {
 		System.out.println(" | Persistencia Xml - Jpa");
 		CabeceraOrden cabecera = ocos.getCabecera();
 		cabeceraOrdenService.save(cabecera);

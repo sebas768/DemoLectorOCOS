@@ -21,7 +21,7 @@ import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
 @LoaderAnotation(fileXML = "AplicaPromocion.xml", isUpdateEstatus = false)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "cabecera", "detallesCabecera"})
-public class Transaccion implements Serializable {
+public class ModelOcos implements Serializable {
 
 	private static final long serialVersionUID = 700413412370715597L;
 
@@ -32,7 +32,7 @@ public class Transaccion implements Serializable {
 	@XmlElement(name = "DetalleCabecera", namespace = "")
 	private List<DetalleCabecera> detallesCabecera;
 	
-	public Transaccion() {
+	public ModelOcos() {
 		// TODO Auto-generated constructor stub
 	}
 

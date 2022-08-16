@@ -1,7 +1,7 @@
 package com.pronaca.osoc.lecturaxml.view.dao.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 //import com.pronaca.osoc.lecturaxml.model.entities.CargaError;
@@ -11,8 +11,8 @@ import com.pronaca.osoc.lecturaxml.view.dao.ICargaDAO;
 @Service
 public class CargaDAOImpl implements ICargaDAO {
 
-	@Autowired
-	private JdbcTemplate template;
+	//@Autowired
+	//private JdbcTemplate template;
 
 	/*@Override
 	public Integer crearCarga(CargaIdb c) throws Exception {
