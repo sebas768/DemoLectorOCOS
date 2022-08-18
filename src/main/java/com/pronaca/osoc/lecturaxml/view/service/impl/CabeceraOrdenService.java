@@ -194,22 +194,12 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 			cabecera.setEstadoRecupDatos(cabecera.getEstadoRecupDatos().toLowerCase());
 			cabecera.setBienesFacturadosRecib(cabecera.getBienesFacturadosRecib().toLowerCase());
 			cabecera.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
-			cabecera.setTipoOrden(isNumeric(cabecera.getNumeroOrden())?TipoEnum.OC:TipoEnum.OS);
+			cabecera.setTipoOrden(cabecera.getCodTipoOrden().isEmpty()?TipoEnum.OS:TipoEnum.OC);
 			cabeceraOrdenRepository.save(cabecera);
 			return "OK";
 		} catch (Exception e) {
 			throw e;
 		}
-	}
-	
-	public Boolean isNumeric(String name) throws Exception {
-		boolean resp = true;
-        for (int i = 0; i < name.length(); i++) {
-            if (!Character.isDigit(name.charAt(i))) {
-            	resp = false;
-            }
-        }
-        return resp;
 	}
 
 }
