@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
+import com.pronaca.osoc.lecturaxml.model.enums.TipoEnum;
 
 /**
  * 
@@ -73,6 +74,7 @@ public class CabeceraOrdenDTO implements Serializable {
 	private String nombreProveedorPrincipal;
 	private String bienesFacturadosRecib;
 	private EstadoEnum estadoRevision;
+	private TipoEnum tipoOrden;
 	private List<DetalleCabeceraDTO> detalleCabecera;
 	
 	public CabeceraOrdenDTO(CabeceraOrden co) {
@@ -104,7 +106,7 @@ public class CabeceraOrdenDTO implements Serializable {
 		this.identPropietario = co.getIdentPropietario();
 		this.codPropietario = co.getCodPropietario();
 		this.nombrePropietario = co.getNombrePropietario();
-		this.identComprador = co.getIdentComprado();
+		this.identComprador = co.getIdentComprador();
 		this.codComprador = co.getCodComprador();
 		this.nombreComprador = co.getNombreComprador();
 		this.fechaOrden = co.getFechaOrden();
@@ -136,6 +138,7 @@ public class CabeceraOrdenDTO implements Serializable {
 		this.nombreProveedorPrincipal = co.getNombreProveedorPrincipal();
 		this.bienesFacturadosRecib = co.getBienesFacturadosRecib();
 		this.estadoRevision = co.getEstadoRevision();
+		this.tipoOrden = co.getTipoOrden();
 	}
 	
 	public String getNumeroOrden() {
@@ -491,6 +494,12 @@ public class CabeceraOrdenDTO implements Serializable {
 	}
 	public void setEstadoRevision(EstadoEnum estadoRevision) {
 		this.estadoRevision = estadoRevision;
+	}
+	public TipoEnum getTipoOrden() {
+		return tipoOrden;
+	}
+	public void setTipoOrden(TipoEnum tipoOrden) {
+		this.tipoOrden = tipoOrden;
 	}
 	public List<DetalleCabeceraDTO> getDetalleCabecera() {
 		return detalleCabecera;

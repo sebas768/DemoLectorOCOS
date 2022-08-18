@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
+import com.pronaca.osoc.lecturaxml.model.enums.TipoEnum;
 
 /**
  * The persistent class for the LEC_CABECERA_ORDEN database table.
@@ -281,6 +282,11 @@ public class CabeceraOrden implements Serializable {
 	@Column(name = "CAB_ESTADO_REVISION")
 	@Enumerated(EnumType.STRING)
 	private EstadoEnum estadoRevision;
+	
+	@XmlTransient
+	@Column(name = "CAB_TIPO_ORDEN")
+	@Enumerated(EnumType.STRING)
+	private TipoEnum tipoOrden;
 
 	// bidirectional many-to-one association to DetalleCabecera
 	@XmlTransient
@@ -502,14 +508,6 @@ public class CabeceraOrden implements Serializable {
 
 	public void setNombrePropietario(String nombrePropietario) {
 		this.nombrePropietario = nombrePropietario;
-	}
-
-	public String getIdentComprado() {
-		return identComprador;
-	}
-
-	public void setIdentComprado(String identComprado) {
-		this.identComprador = identComprado;
 	}
 
 	public String getCodComprador() {
@@ -758,6 +756,22 @@ public class CabeceraOrden implements Serializable {
 
 	public void setEstadoRevision(EstadoEnum estadoRevision) {
 		this.estadoRevision = estadoRevision;
+	}
+
+	public String getIdentComprador() {
+		return identComprador;
+	}
+
+	public void setIdentComprador(String identComprador) {
+		this.identComprador = identComprador;
+	}
+
+	public TipoEnum getTipoOrden() {
+		return tipoOrden;
+	}
+
+	public void setTipoOrden(TipoEnum tipoOrden) {
+		this.tipoOrden = tipoOrden;
 	}
 
 	public List<DetalleCabecera> getDetalleCabecera() {

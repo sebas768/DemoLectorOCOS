@@ -17,6 +17,7 @@ import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
+import com.pronaca.osoc.lecturaxml.model.enums.TipoEnum;
 import com.pronaca.osoc.lecturaxml.util.FechaUtil;
 import com.pronaca.osoc.lecturaxml.view.repositories.BienRepository;
 import com.pronaca.osoc.lecturaxml.view.repositories.CabeceraOrdenRepository;
@@ -193,11 +194,22 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 			cabecera.setEstadoRecupDatos(cabecera.getEstadoRecupDatos().toLowerCase());
 			cabecera.setBienesFacturadosRecib(cabecera.getBienesFacturadosRecib().toLowerCase());
 			cabecera.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
+			cabecera.setTipoOrden(isNumeric(cabecera.getNumeroOrden())?TipoEnum.OC:TipoEnum.OS);
 			cabeceraOrdenRepository.save(cabecera);
 			return "OK";
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+	
+	public Boolean isNumeric(String name) throws Exception {
+		boolean resp = true;
+        for (int i = 0; i < name.length(); i++) {
+            if (!Character.isDigit(name.charAt(i))) {
+            	resp = false;
+            }
+        }
+        return resp;
 	}
 
 }
