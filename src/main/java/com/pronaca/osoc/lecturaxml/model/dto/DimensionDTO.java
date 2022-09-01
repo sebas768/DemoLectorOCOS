@@ -3,6 +3,7 @@ package com.pronaca.osoc.lecturaxml.model.dto;
 import java.io.Serializable;
 
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
  * 
@@ -60,6 +61,7 @@ public class DimensionDTO implements Serializable {
 	private String fecha3;
 	private String fecha4;
 	private String fecha5;
+	private EstadoEnum estadoRevision;
 	
 	public DimensionDTO(Dimension d) {
 		super();
@@ -111,6 +113,7 @@ public class DimensionDTO implements Serializable {
 		this.fecha3 = d.getFecha3();
 		this.fecha4 = d.getFecha4();
 		this.fecha5 = d.getFecha5();
+		this.estadoRevision = d.getEstadoRevision();
 	}
 	
 	public Long getCodigo() {
@@ -400,6 +403,12 @@ public class DimensionDTO implements Serializable {
 	}
 	public void setFecha5(String fecha5) {
 		this.fecha5 = fecha5;
+	}
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
 	}
 	
 }

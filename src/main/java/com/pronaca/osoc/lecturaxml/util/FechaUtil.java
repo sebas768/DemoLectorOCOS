@@ -30,7 +30,7 @@ public class FechaUtil {
 	}
 
 	public static String ajustarFormatoOcos(String fechaString) {
-		SimpleDateFormat formatterOut = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatterOut = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		SimpleDateFormat formatInit = null;
 		String format1 = "dd-MMM-yy";
 		String format2 = "yyyy-MM-dd";

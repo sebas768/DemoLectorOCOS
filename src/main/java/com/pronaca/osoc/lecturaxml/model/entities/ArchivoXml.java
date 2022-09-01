@@ -2,6 +2,7 @@ package com.pronaca.osoc.lecturaxml.model.entities;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the LEC_ARCHIVO_XML database table.
@@ -36,11 +39,18 @@ public class ArchivoXml implements Serializable {
 	@Column(name = "ARC_FECHA_ARCHIVO")
 	private Date fechaArchivo;
 	
+	@Column(name = "ARC_FECHA_CARGA")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar fechaCarga;
+	
 	@Column(name = "ARC_PESO_ARCHIVO")
 	private String pesoArchivo;
 	
 	@Column(name = "ARC_CONTENT_BLOB")
 	private Blob contentBlob;
+	
+	@Column(name = "ARC_VERSION")
+	private String version;
 	
 	@Column(name = "ARC_ESTADO_CARGA")
 	private String estadoCarga;
@@ -113,6 +123,22 @@ public class ArchivoXml implements Serializable {
 
 	public void setTexto2(String texto2) {
 		this.texto2 = texto2;
+	}
+
+	public Calendar getFechaCarga() {
+		return fechaCarga;
+	}
+
+	public void setFechaCarga(Calendar fechaCarga) {
+		this.fechaCarga = fechaCarga;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 	
 }

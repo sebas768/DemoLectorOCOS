@@ -1,11 +1,14 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,10 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * The persistent class for the LEC_BIEN database table.
+ * The persistent class for the LEC_BIEN_ORDEN database table.
  */
 @Entity
-@Table(name = "LEC_BIEN")
+@Table(name = "LEC_BIEN_ORDEN")
 @NamedQueries({	@NamedQuery(name = "Bien.findBien", query = "Select object(b) from Bien as b order by 1 " )})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "numeroOrden", "id", "numeroRecepcion", "lineaRecepcion", "posicion", "cantidadRecibida",
@@ -38,8 +41,8 @@ public class Bien implements Serializable {
 	
 	@XmlTransient
 	@Id
-	@SequenceGenerator(name = "LEC_BIEN_BIE_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_BIEN",allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_BIEN_BIE_CODIGO_GENERATOR")
+	@SequenceGenerator(name = "LEC_BIEN_ORDEN_BIE_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_BIEN_ORDEN",allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_BIEN_ORDEN_BIE_CODIGO_GENERATOR")
 	@Column(name = "BIE_CODIGO")
 	private Long codigo;
 	
@@ -162,6 +165,11 @@ public class Bien implements Serializable {
 	@Column(name = "BIE_METODO_RECEPCION")
 	private String metodoRecepcion;
 
+	@XmlTransient
+	@Column(name = "BIE_ESTADO_REVISION")
+	@Enumerated(EnumType.STRING)
+	private EstadoEnum estadoRevision;
+	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -400,6 +408,14 @@ public class Bien implements Serializable {
 
 	public void setMetodoRecepcion(String metodoRecepcion) {
 		this.metodoRecepcion = metodoRecepcion;
+	}
+
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.util.FechaUtil;
 import com.pronaca.osoc.lecturaxml.view.repositories.DetalleCabeceraRepository;
 import com.pronaca.osoc.lecturaxml.view.service.IDetalleCabeceraService;
@@ -64,6 +65,7 @@ public class DetalleCabeceraService implements IDetalleCabeceraService {
 			detalleCabecera.setLiberado(detalleCabecera.getLiberado().toLowerCase());
 			detalleCabecera.setEntregaMercaderiaReq(detalleCabecera.getEntregaMercaderiaReq().toLowerCase());
 			detalleCabecera.setBienesFacturadosRecib(detalleCabecera.getBienesFacturadosRecib().toLowerCase());
+			detalleCabecera.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
 			detalleCabeceraRepository.save(detalleCabecera);
 			return "OK";
 		} catch (Exception e) {

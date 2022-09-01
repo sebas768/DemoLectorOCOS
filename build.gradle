@@ -21,12 +21,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.jcraft:jsch:0.1.55'
+	implementation files('src/main/resources/SOAIntegracion.jar')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     
+    // https://mvnrepository.com/artifact/com.ibm.mq/com.ibm.mq.allclient
+	implementation group: 'com.ibm.mq', name: 'com.ibm.mq.allclient', version: '9.1.4.0'
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-starter
     implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '10.0.2'
     // https://mvnrepository.com/artifact/com.google.code.gson/gson

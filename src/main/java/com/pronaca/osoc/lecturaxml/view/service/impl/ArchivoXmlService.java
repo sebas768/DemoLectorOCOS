@@ -2,6 +2,7 @@ package com.pronaca.osoc.lecturaxml.view.service.impl;
 
 import java.sql.Blob;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -74,6 +75,7 @@ public class ArchivoXmlService implements IArchivoXmlService {
 			ArchivoXml xml = new ArchivoXml(); 
 			xml.setNombreArchivo(resp.getNombreArchivo());
 			xml.setFechaArchivo(new Date (resp.getFechaArchivo()));
+			xml.setFechaCarga(new GregorianCalendar());
 			xml.setPesoArchivo(ob.convertSize(resp.getTaminioArchivo()));
 			xml.setEstadoCarga(status.toString()); 
 			Blob fileBlob = ob.fileToBlob(resp);

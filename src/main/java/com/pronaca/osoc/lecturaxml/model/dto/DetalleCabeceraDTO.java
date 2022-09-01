@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
  * 
@@ -20,7 +21,7 @@ public class DetalleCabeceraDTO implements Serializable {
 	private String posicion;
 	private String facturado;
 	private String liberado;
-	private String cantidadPerdida;
+	private String cantidadPedida;
 	private String unidadCompra;
 	private String precio;
 	private String importe;
@@ -65,6 +66,7 @@ public class DetalleCabeceraDTO implements Serializable {
 	private String codEstrategiaIng;
 	private String bienesFacturadosRecib;
 	private String metodoRecepcion;
+	private EstadoEnum estadoRevision;
 	private List<DimensionDTO> dimensiones;
 	private List<BienDTO> bienes;
 	
@@ -79,7 +81,7 @@ public class DetalleCabeceraDTO implements Serializable {
 		this.posicion = dc.getPosicion();
 		this.facturado = dc.getFacturado();
 		this.liberado = dc.getLiberado();
-		this.cantidadPerdida = dc.getCantidadPerdida();
+		this.cantidadPedida = dc.getCantidadPedida();
 		this.unidadCompra = dc.getUnidadCompra();
 		this.precio = dc.getPrecio();
 		this.importe = dc.getImporte();
@@ -124,6 +126,7 @@ public class DetalleCabeceraDTO implements Serializable {
 		this.codEstrategiaIng = dc.getCodEstrategiaIng();
 		this.bienesFacturadosRecib = dc.getBienesFacturadosRecib();
 		this.metodoRecepcion = dc.getMetodoRecepcion();
+		this.estadoRevision = dc.getEstadoRevision();
 	}
 	
 	public Long getCodigo() {
@@ -168,11 +171,11 @@ public class DetalleCabeceraDTO implements Serializable {
 	public void setLiberado(String liberado) {
 		this.liberado = liberado;
 	}
-	public String getCantidadPerdida() {
-		return cantidadPerdida;
+	public String getCantidadPedida() {
+		return cantidadPedida;
 	}
-	public void setCantidadPerdida(String cantidadPerdida) {
-		this.cantidadPerdida = cantidadPerdida;
+	public void setCantidadPedida(String cantidadPedida) {
+		this.cantidadPedida = cantidadPedida;
 	}
 	public String getUnidadCompra() {
 		return unidadCompra;
@@ -450,4 +453,11 @@ public class DetalleCabeceraDTO implements Serializable {
 	public void setBienes(List<BienDTO> bienes) {
 		this.bienes = bienes;
 	}
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
+	}
+	
 }

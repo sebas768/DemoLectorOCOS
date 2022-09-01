@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pronaca.osoc.lecturaxml.model.entities.Bien;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.util.FechaUtil;
 import com.pronaca.osoc.lecturaxml.view.repositories.BienRepository;
 import com.pronaca.osoc.lecturaxml.view.service.IBienService;
@@ -59,6 +60,7 @@ public class BienService implements IBienService {
 			bien.setFecha4(FechaUtil.ajustarFormatoOcos(bien.getFecha4()));
 			bien.setFecha5(FechaUtil.ajustarFormatoOcos(bien.getFecha5()));
 			bien.setMetodoRecepcion(bien.getMetodoRecepcion().toLowerCase());
+			bien.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
 			bienRepository.save(bien);
 			return "OK";
 		} catch (Exception e) {

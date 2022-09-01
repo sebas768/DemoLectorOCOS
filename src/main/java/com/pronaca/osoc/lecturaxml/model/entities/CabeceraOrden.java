@@ -1,16 +1,20 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -45,7 +49,13 @@ public class CabeceraOrden implements Serializable {
 
 	private static final long serialVersionUID = 700413412370715597L;
 
+	@XmlTransient
 	@Id
+	@SequenceGenerator(name = "LEC_CABECERA_ORDEN_CAB_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_CABECERA_ORDEN",allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_CABECERA_ORDEN_CAB_CODIGO_GENERATOR")
+	@Column(name = "CAB_CODIGO")
+	private Long codigo;
+	
 	@XmlElement(name = "NumeroOrden")
 	@Column(name = "CAB_NUMERO_ORDEN")
 	private String numeroOrden;
@@ -279,15 +289,23 @@ public class CabeceraOrden implements Serializable {
 	private String bienesFacturadosRecib;
 
 	@XmlTransient
+	@Column(name = "CAB_IMPORTE_BRUTO_CALCULADO")
+	private Long importeBrutoCalculado;
+	
+	@XmlTransient
 	@Column(name = "CAB_ESTADO_REVISION")
 	@Enumerated(EnumType.STRING)
 	private EstadoEnum estadoRevision;
 	
 	@XmlTransient
+	@Column(name = "CAB_FECHA_REVISION")
+	private Date fechaRevision;
+	
+	@XmlTransient
 	@Column(name = "CAB_TIPO_ORDEN")
 	@Enumerated(EnumType.STRING)
 	private TipoEnum tipoOrden;
-
+	
 	// bidirectional many-to-one association to DetalleCabecera
 	@XmlTransient
 	@OneToMany(mappedBy = "cabeceraOrden")
@@ -780,6 +798,30 @@ public class CabeceraOrden implements Serializable {
 
 	public void setDetalleCabecera(List<DetalleCabecera> detalleCabecera) {
 		this.detalleCabecera = detalleCabecera;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public Long getImporteBrutoCalculado() {
+		return importeBrutoCalculado;
+	}
+
+	public void setImporteBrutoCalculado(Long importeBrutoCalculado) {
+		this.importeBrutoCalculado = importeBrutoCalculado;
+	}
+
+	public Date getFechaRevision() {
+		return fechaRevision;
+	}
+
+	public void setFechaRevision(Date fechaRevision) {
+		this.fechaRevision = fechaRevision;
 	}
 
 }

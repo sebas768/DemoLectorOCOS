@@ -1,6 +1,7 @@
 package com.pronaca.osoc.lecturaxml.model.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
@@ -15,6 +16,7 @@ import com.pronaca.osoc.lecturaxml.model.enums.TipoEnum;
 public class CabeceraOrdenDTO implements Serializable {
 	
 	private static final long serialVersionUID = 2513506782694494679L;
+	private Long codigo;
 	private String numeroOrden;
 	private String idOrden;
 	private String estado;
@@ -73,12 +75,15 @@ public class CabeceraOrdenDTO implements Serializable {
 	private String codProveedorPrincipal;
 	private String nombreProveedorPrincipal;
 	private String bienesFacturadosRecib;
+	private Long importeBrutoCalculado;
 	private EstadoEnum estadoRevision;
+	private Date fechaRevision;
 	private TipoEnum tipoOrden;
 	private List<DetalleCabeceraDTO> detalleCabecera;
 	
 	public CabeceraOrdenDTO(CabeceraOrden co) {
 		super();
+		this.codigo = co.getCodigo();
 		this.numeroOrden = co.getNumeroOrden();
 		this.idOrden = co.getIdOrden();
 		this.estado = co.getEstado();
@@ -137,7 +142,9 @@ public class CabeceraOrdenDTO implements Serializable {
 		this.codProveedorPrincipal = co.getCodProveedorPrincipal();
 		this.nombreProveedorPrincipal = co.getNombreProveedorPrincipal();
 		this.bienesFacturadosRecib = co.getBienesFacturadosRecib();
+		this.importeBrutoCalculado = co.getImporteBrutoCalculado();
 		this.estadoRevision = co.getEstadoRevision();
+		this.fechaRevision = co.getFechaRevision();
 		this.tipoOrden = co.getTipoOrden();
 	}
 	
@@ -506,5 +513,23 @@ public class CabeceraOrdenDTO implements Serializable {
 	}
 	public void setDetalleCabecera(List<DetalleCabeceraDTO> detalleCabecera) {
 		this.detalleCabecera = detalleCabecera;
+	}
+	public Long getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+	public Long getImporteBrutoCalculado() {
+		return importeBrutoCalculado;
+	}
+	public void setImporteBrutoCalculado(Long importeBrutoCalculado) {
+		this.importeBrutoCalculado = importeBrutoCalculado;
+	}
+	public Date getFechaRevision() {
+		return fechaRevision;
+	}
+	public void setFechaRevision(Date fechaRevision) {
+		this.fechaRevision = fechaRevision;
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pronaca.osoc.lecturaxml.model.entities.ParametroGeneral;
 
-public interface ParametroGeneralRepository extends JpaRepository<ParametroGeneral, Long> {
+public interface ParametroGeneralRepository extends JpaRepository<ParametroGeneral, String> {
 
 	List<ParametroGeneral> findByCodigo(String codigo);
 }

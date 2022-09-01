@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.util.FechaUtil;
 import com.pronaca.osoc.lecturaxml.view.repositories.DimensionRepository;
 import com.pronaca.osoc.lecturaxml.view.service.IDimensionService;
@@ -57,6 +58,7 @@ public class DimensionService implements IDimensionService {
 			dimension.setFecha3(FechaUtil.ajustarFormatoOcos(dimension.getFecha3()));
 			dimension.setFecha4(FechaUtil.ajustarFormatoOcos(dimension.getFecha4()));
 			dimension.setFecha5(FechaUtil.ajustarFormatoOcos(dimension.getFecha5()));
+			dimension.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
 			dimensionRepository.save(dimension);
 			return "OK";
 		} catch (Exception e) {

@@ -178,7 +178,7 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 	
 	@Override
 	@Transactional
-	public String save(CabeceraOrden cabecera) throws Exception{
+	public CabeceraOrden save(CabeceraOrden cabecera) throws Exception{
 		try {
 			cabecera.setFechaProceso(FechaUtil.ajustarFormatoOcos(cabecera.getFechaProceso()));
 			cabecera.setFechaOrden(FechaUtil.ajustarFormatoOcos(cabecera.getFechaOrden()));
@@ -195,8 +195,8 @@ public class CabeceraOrdenService implements ICabeceraOrdenService {
 			cabecera.setBienesFacturadosRecib(cabecera.getBienesFacturadosRecib().toLowerCase());
 			cabecera.setEstadoRevision(EstadoEnum.PENDIENTE_REVISION);
 			cabecera.setTipoOrden(cabecera.getCodTipoOrden().isEmpty()?TipoEnum.OS:TipoEnum.OC);
-			cabeceraOrdenRepository.save(cabecera);
-			return "OK";
+			CabeceraOrden obj_save = cabeceraOrdenRepository.save(cabecera);
+			return obj_save;
 		} catch (Exception e) {
 			throw e;
 		}

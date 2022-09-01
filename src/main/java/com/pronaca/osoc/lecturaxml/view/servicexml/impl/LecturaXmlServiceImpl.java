@@ -61,12 +61,12 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<ModelOcos, Long>
 	public Boolean cargarData(ModelOcos ocos) throws Exception {
 		System.out.println(" | Persistencia Xml - Jpa");
 		CabeceraOrden cabecera = ocos.getCabecera();
-		cabeceraOrdenService.save(cabecera);
+		CabeceraOrden cabecera_save = cabeceraOrdenService.save(cabecera);
 		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();  
 		if(detalle!=null && !detalle.isEmpty()) {
 			detalle.stream().forEach(det -> { 
 				try {
-					det.setCabeceraOrden(cabeceraOrdenService.findByNumeroOrden(ocos.getCabecera().getNumeroOrden()));
+					det.setCabeceraOrden(cabecera_save);
 					detalleCabeceraService.save(det); 
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -43,6 +43,7 @@ public class LecturaXmlController {
 	@GetMapping("/lecturaXml/updateStatus")
 	public ResponseEntity<?> updateStatus(@RequestParam("n") String numeroOrden,
 										  @RequestParam("s") EstadoEnum estado) {
+		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(iCabeceraOrdenService.updateStatus(numeroOrden, estado));
 		} catch (Exception e) {

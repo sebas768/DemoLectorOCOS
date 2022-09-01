@@ -1,11 +1,14 @@
 package com.pronaca.osoc.lecturaxml.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,10 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * The persistent class for the LEC_DIMENSION database table.
+ * The persistent class for the LEC_DIMENSION_ORDEN database table.
  */
 @Entity
-@Table(name = "LEC_DIMENSION")
+@Table(name = "LEC_DIMENSION_ORDEN")
 @NamedQueries({	@NamedQuery(name = "Dimension.findDimension", query = "Select object(d) from Dimension as d order by 1 " )})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"numeroOrden", "id", "idPosicion", "posicion", "indicePedidos", "codCuenta", "nombreCuenta",
@@ -41,8 +44,8 @@ public class Dimension implements Serializable {
 	
 	@XmlTransient
 	@Id
-	@SequenceGenerator(name = "LEC_DIMENSION_DIM_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_DIMENSION",allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_DIMENSION_DIM_CODIGO_GENERATOR")
+	@SequenceGenerator(name = "LEC_DIMENSION_ORDEN_DIM_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_DIMENSION_ORDEN",allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_DIMENSION_ORDEN_DIM_CODIGO_GENERATOR")
 	@Column(name = "DIM_CODIGO") 
 	private Long codigo;
 	
@@ -240,6 +243,11 @@ public class Dimension implements Serializable {
 	@XmlElement(name = "Fecha5")
 	@Column(name = "DIM_FECHA5")
 	private String fecha5;
+	
+	@XmlTransient
+	@Column(name = "DIM_ESTADO_REVISION")
+	@Enumerated(EnumType.STRING)
+	private EstadoEnum estadoRevision;
 
 	public Long getCodigo() {
 		return codigo;
@@ -631,6 +639,14 @@ public class Dimension implements Serializable {
 
 	public void setFecha5(String fecha5) {
 		this.fecha5 = fecha5;
+	}
+
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
 	}
 
 }

@@ -2,7 +2,9 @@ package com.pronaca.osoc.lecturaxml.model.dto;
 
 import java.io.Serializable;
 
+
 import com.pronaca.osoc.lecturaxml.model.entities.Bien;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 
 /**
@@ -42,6 +44,7 @@ public class BienDTO implements Serializable {
 	private String fecha4;
 	private String fecha5;
 	private String metodoRecepcion;
+	private EstadoEnum estadoRevision;
 	
 	
 	public BienDTO(Bien b) {
@@ -75,6 +78,7 @@ public class BienDTO implements Serializable {
 		this.fecha4 = b.getFecha4();
 		this.fecha5 = b.getFecha5();
 		this.metodoRecepcion = b.getMetodoRecepcion();
+		this.estadoRevision = b.getEstadoRevision();
 	}
 	
 	public Long getCodigo() {
@@ -250,6 +254,12 @@ public class BienDTO implements Serializable {
 	}
 	public void setMetodoRecepcion(String metodoRecepcion) {
 		this.metodoRecepcion = metodoRecepcion;
+	}
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
 	}
 	
 }

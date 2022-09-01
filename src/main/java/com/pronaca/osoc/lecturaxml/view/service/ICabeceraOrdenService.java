@@ -72,5 +72,5 @@ public interface ICabeceraOrdenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public String save(CabeceraOrden cabeceraOrden) throws Exception;
+	public CabeceraOrden save(CabeceraOrden cabeceraOrden) throws Exception;
 }

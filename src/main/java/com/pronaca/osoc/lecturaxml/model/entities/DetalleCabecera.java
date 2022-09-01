@@ -2,12 +2,15 @@ package com.pronaca.osoc.lecturaxml.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,13 +30,13 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The persistent class for the LEC_DETALLE_CABECERA database table.
+ * The persistent class for the LEC_DETALLE_ORDEN database table.
  */
 @Entity
-@Table(name = "LEC_DETALLE_CABECERA")
+@Table(name = "LEC_DETALLE_ORDEN")
 @NamedQueries({ @NamedQuery(name = "DetalleCabecera.findDetalle", query = "Select object(d) from DetalleCabecera as d order by 1 ") })
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "numeroOrden", "posicion", "facturado", "liberado",  "cantidadPerdida",
+@XmlType(propOrder = { "numeroOrden", "posicion", "facturado", "liberado",  "cantidadPedida",
 					   "unidadCompra", "precio", "importe", "unidadPrecio", "importeBruto",
 					   "iva", "codFiscal", "porcentajeIva", "cantidadFacturada", "cantidadNetaEntrega",
 					   "cantidadEntrega", "entregaMercaderiaReq", "codProducto",
@@ -49,22 +51,18 @@ public class DetalleCabecera implements Serializable {
 
 	@Id
 	@XmlTransient
-	@SequenceGenerator(name = "LEC_DETALLE_CABECERA_DET_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_DETALLE_CABECERA",allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_DETALLE_CABECERA_DET_CODIGO_GENERATOR")
+	@SequenceGenerator(name = "LEC_DETALLE_ORDEN_DET_CODIGO_GENERATOR", sequenceName = "SEQ_LEC_DETALLE_ORDEN",allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEC_DETALLE_ORDEN_DET_CODIGO_GENERATOR")
 	@Column(name = "DET_CODIGO")
 	private Long codigo;
 
-	@Transient
-	@XmlElement(name = "NumeroOrden")
-	private String numeroOrden;
-	
 	// bidirectional many-to-one association
 	@XmlTransient
 	@ManyToOne
-	@JoinColumn(name = "DET_NUMERO_ORDEN", nullable = false) 
+	@JoinColumn(name = "DET_CAB_CODIGO", nullable = false) 
 	@JsonBackReference
 	private CabeceraOrden cabeceraOrden;
-
+		
 	@XmlTransient
 	@Column(name = "DET_ID")
 	private String id;
@@ -72,6 +70,10 @@ public class DetalleCabecera implements Serializable {
 	@XmlTransient
 	@Column(name = "DET_ID_ORDEN")
 	private String idOrden;
+
+	@XmlElement(name = "NumeroOrden")
+	@Column(name = "DET_NUMERO_ORDEN")
+	private String numeroOrden;
 
 	@XmlElement(name = "Posicion")
 	@Column(name = "DET_POSICION")
@@ -86,8 +88,8 @@ public class DetalleCabecera implements Serializable {
 	private String liberado;
 
 	@XmlElement(name = "CantidadPedida")
-	@Column(name = "DET_CANTIDAD_PERDIDA")
-	private String cantidadPerdida;
+	@Column(name = "DET_CANTIDAD_PEDIDA")
+	private String cantidadPedida;
 	
 	@XmlElement(name = "UnidadCompra")
 	@Column(name = "DET_UNIDAD_COMPRA")
@@ -265,6 +267,11 @@ public class DetalleCabecera implements Serializable {
 	@Column(name = "DET_METODO_RECEPCION")
 	private String metodoRecepcion;
 	
+	@XmlTransient
+	@Column(name = "DET_ESTADO_REVISION")
+	@Enumerated(EnumType.STRING)
+	private EstadoEnum estadoRevision;
+	
 	// bidirectional many-to-one association to Dimension
 	@XmlElementWrapper(name = "Dimensiones")
 	@XmlElement(name = "Dimension", namespace = "")
@@ -333,14 +340,6 @@ public class DetalleCabecera implements Serializable {
 
 	public void setLiberado(String liberado) {
 		this.liberado = liberado;
-	}
-
-	public String getCantidadPerdida() {
-		return cantidadPerdida;
-	}
-
-	public void setCantidadPerdida(String cantidadPerdida) {
-		this.cantidadPerdida = cantidadPerdida;
 	}
 
 	public String getUnidadCompra() {
@@ -717,6 +716,22 @@ public class DetalleCabecera implements Serializable {
 
 	public void setBien(List<Bien> bien) {
 		this.bien = bien;
+	}
+
+	public String getCantidadPedida() {
+		return cantidadPedida;
+	}
+
+	public void setCantidadPedida(String cantidadPedida) {
+		this.cantidadPedida = cantidadPedida;
+	}
+
+	public EstadoEnum getEstadoRevision() {
+		return estadoRevision;
+	}
+
+	public void setEstadoRevision(EstadoEnum estadoRevision) {
+		this.estadoRevision = estadoRevision;
 	}
 
 }

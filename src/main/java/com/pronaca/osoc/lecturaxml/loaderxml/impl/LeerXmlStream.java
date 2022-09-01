@@ -29,7 +29,7 @@ public class LeerXmlStream<T, Pk extends Serializable> implements ILeerXmlStream
 		List<T> registros = new ArrayList<>();
 		Class<T> entity = entidad;
 		XMLInputFactory xmlif = XMLInputFactory.newInstance();
-		XMLStreamReader xmlr = xmlif.createXMLStreamReader(new FileInputStream(respuestaFTP.getFileDownload()));
+		XMLStreamReader xmlr = xmlif.createXMLStreamReader(new FileInputStream(respuestaFTP.getFileDownload()), "UTF-8");
 		try {
 			JAXBContext ucontext = JAXBContext.newInstance(entity);
 			Unmarshaller unmarshaller = ucontext.createUnmarshaller();
