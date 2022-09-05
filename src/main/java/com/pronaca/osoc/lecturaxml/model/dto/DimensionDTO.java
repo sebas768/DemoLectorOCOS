@@ -3,6 +3,7 @@ package com.pronaca.osoc.lecturaxml.model.dto;
 import java.io.Serializable;
 
 import com.pronaca.osoc.lecturaxml.model.entities.Dimension;
+import com.pronaca.osoc.lecturaxml.model.entities.DimensionOrdenH;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
@@ -64,6 +65,59 @@ public class DimensionDTO implements Serializable {
 	private EstadoEnum estadoRevision;
 	
 	public DimensionDTO(Dimension d) {
+		super();
+		this.codigo = d.getCodigo();
+		this.numeroOrden = d.getNumeroOrden();
+		this.id = d.getId();
+		this.idPosicion = d.getIdPosicion();
+		this.posicion = d.getPosicion();
+		this.indicePedidos = d.getIndicePedidos();
+		this.codCuenta = d.getCodCuenta();
+		this.nombreCuenta = d.getNombreCuenta();
+		this.codCentroCosto = d.getCodCentroCosto();
+		this.nombreCentroCosto = d.getNombreCentroCosto();
+		this.codProyecto = d.getCodProyecto();
+		this.nombreProyecto = d.getNombreProyecto();
+		this.importeBruto = d.getImporteBruto();
+		this.neto = d.getNeto();
+		this.iva = d.getIva();
+		this.codFiscal = d.getCodFiscal();
+		this.porcentajeIva = d.getPorcentajeIva();
+		this.cantidad = d.getCantidad();
+		this.texto1 = d.getTexto1();
+		this.texto2 = d.getTexto2();
+		this.texto3 = d.getTexto3();
+		this.texto4 = d.getTexto4();
+		this.texto5 = d.getTexto5();
+		this.texto6 = d.getTexto6();
+		this.texto7 = d.getTexto7();
+		this.texto8 = d.getTexto8();
+		this.texto9 = d.getTexto9();
+		this.texto10 = d.getTexto10();
+		this.texto11 = d.getTexto11();
+		this.texto12 = d.getTexto12();
+		this.texto13 = d.getTexto13();
+		this.texto14 = d.getTexto14();
+		this.texto15 = d.getTexto15();
+		this.texto16 = d.getTexto16();
+		this.texto17 = d.getTexto17();
+		this.texto18 = d.getTexto18();
+		this.texto19 = d.getTexto19();
+		this.texto20 = d.getTexto20();
+		this.numerico1 = d.getNumerico1();
+		this.numerico2 = d.getNumerico2();
+		this.numerico3 = d.getNumerico3();
+		this.numerico4 = d.getNumerico4();
+		this.numerico5 = d.getNumerico5();
+		this.fecha1 = d.getFecha1();
+		this.fecha2 = d.getFecha2();
+		this.fecha3 = d.getFecha3();
+		this.fecha4 = d.getFecha4();
+		this.fecha5 = d.getFecha5();
+		this.estadoRevision = d.getEstadoRevision();
+	}
+	
+	public DimensionDTO(DimensionOrdenH d) {
 		super();
 		this.codigo = d.getCodigo();
 		this.numeroOrden = d.getNumeroOrden();

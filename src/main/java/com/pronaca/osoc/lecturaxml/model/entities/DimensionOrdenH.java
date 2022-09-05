@@ -32,6 +32,9 @@ public class DimensionOrdenH implements Serializable {
 	@Column(name = "DIM_CODIGO") 
 	private Long codigo;
 	
+	@Column(name = "DIM_DET_CODIGO")
+	private Long detCodigo;
+	
 	@Column(name = "DIM_NUMERO_ORDEN")
 	private String numeroOrden;
 	
@@ -178,6 +181,14 @@ public class DimensionOrdenH implements Serializable {
 	private EstadoEnum estadoRevision;
 
 	
+	public Long getDetCodigo() {
+		return detCodigo;
+	}
+
+	public void setDetCodigo(Long detCodigo) {
+		this.detCodigo = detCodigo;
+	}
+
 	public Long getHistId() {
 		return histId;
 	}

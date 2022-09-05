@@ -32,7 +32,7 @@ public class CabeceraOrdenH implements Serializable {
 	
 	@Column(name = "CAB_CODIGO")
 	private Long codigo;
-	
+		
 	@Column(name = "CAB_NUMERO_ORDEN")
 	private String numeroOrden;
 

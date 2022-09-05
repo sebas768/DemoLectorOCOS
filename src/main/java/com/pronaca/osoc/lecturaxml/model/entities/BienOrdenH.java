@@ -32,6 +32,9 @@ public class BienOrdenH implements Serializable {
 	@Column(name = "BIE_CODIGO")
 	private Long codigo;
 	
+	@Column(name = "BIE_DET_CODIGO")
+	private Long detCodigo;
+	
 	@Column(name = "BIE_NUMERO_ORDEN")
 	private String numeroOrden;
 	
@@ -121,6 +124,14 @@ public class BienOrdenH implements Serializable {
 	private EstadoEnum estadoRevision;
 	
 	
+	public Long getDetCodigo() {
+		return detCodigo;
+	}
+
+	public void setDetCodigo(Long detCodigo) {
+		this.detCodigo = detCodigo;
+	}
+
 	public Long getHistId() {
 		return histId;
 	}

@@ -83,7 +83,7 @@ public class ArchivoXmlService implements IArchivoXmlService {
 				xml.setContentBlob(fileBlob); 
 			}
 			archivoXmlRepository.save(xml);
-			System.out.println(" | Save file xml as BLOB"); 
+			System.out.println(" | Guardado Xml como BLOB"); 
 			return "OK";
 		} catch (Exception e) {
 			e.printStackTrace();

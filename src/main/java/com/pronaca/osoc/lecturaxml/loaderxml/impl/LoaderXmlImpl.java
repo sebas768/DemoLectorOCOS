@@ -69,11 +69,9 @@ public class LoaderXmlImpl implements ILoaderXml {
 		return generalService.getString(Constantes.PK_RUTA_DESCARGAR);
 	}
 
-	public LoaderXmlImpl() {}
-
 	@Override
 	public String loadXml() throws Exception {
-		System.out.println(" --> INICIA LECTURA XML - SFTP ");
+		System.out.println("==> INICIA LECTURA_XML OCOS - SFTP");
 		long tiempoInicio = System.currentTimeMillis();
 		List<String> nameFiles = clienteSFTP.getNameFiles(getUsuarioSFTP(), getPasswordSFTP(), getServidorSFTP(),
 				getPuertoSFTP(), getPathSFTP());
@@ -90,7 +88,7 @@ public class LoaderXmlImpl implements ILoaderXml {
 			}
 		});
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		System.out.println(" --> FINALIZA LECTURA XML - SFTP, Tiempo de ejecución: " + tiempoInicio); 
+		System.out.println("==> FINALIZA LECTURA_XML - OCOS - SFTP, Tiempo de ejecución: " + tiempoInicio); 
 		clienteSFTP.disconnectChannel(channelSftp);
 		return "OK"; 
 	}
@@ -170,17 +168,17 @@ public class LoaderXmlImpl implements ILoaderXml {
 			throw e;
 		} finally {
 			System.gc();
+			//Delete file system
+			Path path = Paths.get(resp.getFileDownload().getPath());
+			if (Files.deleteIfExists(path)) {
+				System.out.println(" | Liberado xml");
+			} 
+			System.out.println(" | Finaliza lectura xml, Tiempo: " + tiempoInicio);
 		}
 		
 		tiempoInicio = System.currentTimeMillis() - tiempoInicio;
-		String nameFile = resp!=null?resp.getNombreArchivo():"";
-		Path path = Paths.get(resp.getFileDownload().getPath());
-		if (Files.deleteIfExists(path)) {
-			System.out.println(" # Delete file xml ");
-		} 
-		System.out.println(" | Finaliza lectura " + nameFile + ", Tiempo: " + tiempoInicio);
-
 		return retorno.toString();
 	}
 	
+	public LoaderXmlImpl() {}
 }

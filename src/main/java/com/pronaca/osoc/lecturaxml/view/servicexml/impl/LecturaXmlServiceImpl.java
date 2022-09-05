@@ -59,7 +59,7 @@ public class LecturaXmlServiceImpl extends ServiceXmlGeneric<ModelOcos, Long>
 	@Override
 	@Transactional
 	public Boolean cargarData(ModelOcos ocos) throws Exception {
-		System.out.println(" | Persistencia Xml - Jpa");
+		System.out.println(" | Persistencia datos xml ");
 		CabeceraOrden cabecera = ocos.getCabecera();
 		CabeceraOrden cabecera_save = cabeceraOrdenService.save(cabecera);
 		List<DetalleCabecera> detalle = ocos.getDetallesCabecera();  

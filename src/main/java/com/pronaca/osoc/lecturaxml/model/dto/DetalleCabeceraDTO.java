@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabecera;
+import com.pronaca.osoc.lecturaxml.model.entities.DetalleCabeceraH;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 
 /**
@@ -73,6 +74,63 @@ public class DetalleCabeceraDTO implements Serializable {
 	
 	
 	public DetalleCabeceraDTO(DetalleCabecera dc) {
+		super();
+		this.codigo = dc.getCodigo();
+		this.numeroOrden = dc.getNumeroOrden();
+		this.id = dc.getId();
+		this.idOrden = dc.getIdOrden();
+		this.posicion = dc.getPosicion();
+		this.facturado = dc.getFacturado();
+		this.liberado = dc.getLiberado();
+		this.cantidadPedida = dc.getCantidadPedida();
+		this.unidadCompra = dc.getUnidadCompra();
+		this.precio = dc.getPrecio();
+		this.importe = dc.getImporte();
+		this.unidadPrecio = dc.getUnidadPrecio();
+		this.importeBruto = dc.getImporteBruto();
+		this.iva = dc.getIva();
+		this.codFiscal = dc.getCodFiscal();
+		this.porcentajeIva = dc.getPorcentajeIva();
+		this.importeNetoFacturado = dc.getImporteNetoFacturado();
+		this.cantidadFacturada = dc.getCantidadFacturada();
+		this.cantidadNetaEntrega = dc.getCantidadNetaEntrega();
+		this.cantidadEntrega = dc.getCantidadEntrega();
+		this.entregaMercaderiaReq = dc.getEntregaMercaderiaReq();
+		this.codProducto = dc.getCodProducto();
+		this.nombreProducto = dc.getNombreProducto();
+		this.unspsc = dc.getUnspsc();
+		this.fechaPlanificadaRecepcion = dc.getFechaPlanificadaRecepcion();
+		this.fechaRealRecepcion = dc.getFechaRealRecepcion();
+		this.comentario = dc.getComentario();
+		this.texto1 = dc.getTexto1();
+		this.texto2 = dc.getTexto2();
+		this.texto3 = dc.getTexto3();
+		this.texto4 = dc.getTexto4();
+		this.texto5 = dc.getTexto5();
+		this.texto6 = dc.getTexto6();
+		this.texto7 = dc.getTexto7();
+		this.texto8 = dc.getTexto8();
+		this.texto9 = dc.getTexto9();
+		this.texto10 = dc.getTexto10();
+		this.numerico1 = dc.getNumerico1();
+		this.numerico2 = dc.getNumerico2();
+		this.numerico3 = dc.getNumerico3();
+		this.numerico4 = dc.getNumerico4();
+		this.numerico5 = dc.getNumerico5();
+		this.fecha1 = dc.getFecha1();
+		this.fecha2 = dc.getFecha2();
+		this.fecha3 = dc.getFecha3();
+		this.fecha4 = dc.getFecha4();
+		this.fecha5 = dc.getFecha5();
+		this.descripcion = dc.getDescripcion();
+		this.codFactorIng = dc.getCodFactorIng();
+		this.codEstrategiaIng = dc.getCodEstrategiaIng();
+		this.bienesFacturadosRecib = dc.getBienesFacturadosRecib();
+		this.metodoRecepcion = dc.getMetodoRecepcion();
+		this.estadoRevision = dc.getEstadoRevision();
+	}
+	
+	public DetalleCabeceraDTO(DetalleCabeceraH dc) {
 		super();
 		this.codigo = dc.getCodigo();
 		this.numeroOrden = dc.getNumeroOrden();

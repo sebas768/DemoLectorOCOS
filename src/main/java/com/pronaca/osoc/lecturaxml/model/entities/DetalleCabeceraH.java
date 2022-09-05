@@ -32,6 +32,9 @@ public class DetalleCabeceraH implements Serializable {
 	@Column(name = "DET_CODIGO")
 	private Long codigo;
 	
+	@Column(name = "DET_CAB_CODIGO")
+	private Long cabCodigo;
+	
 	@Column(name = "DET_ID")
 	private String id;
 
@@ -189,6 +192,14 @@ public class DetalleCabeceraH implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private EstadoEnum estadoRevision;
 	
+
+	public Long getCabCodigo() {
+		return cabCodigo;
+	}
+
+	public void setCabCodigo(Long cabCodigo) {
+		this.cabCodigo = cabCodigo;
+	}
 
 	public Long getHistId() {
 		return histId;

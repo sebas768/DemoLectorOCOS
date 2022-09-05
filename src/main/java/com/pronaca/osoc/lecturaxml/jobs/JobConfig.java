@@ -57,17 +57,21 @@ public class JobConfig implements SchedulingConfigurer {
 				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 				Calendar fechaInicio = GregorianCalendar.getInstance();
 				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 2, 0, 0);
+					
 					System.out.println("Inicia lectura");
 					System.out.println(fechaInicio.getTime().toString());
 					System.out.println("Inicia anterior lectura");
 					System.out.println(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
+
 				nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
 				nextExecutionTime.add(Calendar.MINUTE, env.getProperty("job.frecuently.lectura", Integer.class));
 				if (nextExecutionTime.get(Calendar.HOUR_OF_DAY) == 1) {
 					nextExecutionTime.add(Calendar.HOUR_OF_DAY, env.getProperty("job.frecuently.add", Integer.class));
 				}
+
 					System.out.println("Inicia nueva lectura");
 					System.out.println(nextExecutionTime.getTime());
+
 				return nextExecutionTime.getTime();
 			}
 		});
@@ -88,14 +92,18 @@ public class JobConfig implements SchedulingConfigurer {
 				Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 				Calendar fechaInicio = GregorianCalendar.getInstance();
 				fechaInicio.set(fechaInicio.get(Calendar.YEAR), fechaInicio.get(Calendar.MONTH), fechaInicio.get(Calendar.DAY_OF_MONTH), 11, 0, 0);
+					
 					System.out.println("Inicia delete");
 					System.out.println(fechaInicio.getTime().toString());
 					System.out.println("Inicia anterior delete");
 					System.out.println(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
+
 				nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : fechaInicio.getTime());
 				nextExecutionTime.add(Calendar.MINUTE, env.getProperty("job.frecuently.delete", Integer.class));
+					
 					System.out.println("Inicia nueva delete");
 					System.out.println((nextExecutionTime.getTime()));
+
 				return nextExecutionTime.getTime();
 			}
 		});

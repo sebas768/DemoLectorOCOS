@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrden;
+import com.pronaca.osoc.lecturaxml.model.entities.CabeceraOrdenH;
 import com.pronaca.osoc.lecturaxml.model.enums.EstadoEnum;
 import com.pronaca.osoc.lecturaxml.model.enums.TipoEnum;
 
@@ -82,6 +83,73 @@ public class CabeceraOrdenDTO implements Serializable {
 	private List<DetalleCabeceraDTO> detalleCabecera;
 	
 	public CabeceraOrdenDTO(CabeceraOrden co) {
+		super();
+		this.codigo = co.getCodigo();
+		this.numeroOrden = co.getNumeroOrden();
+		this.idOrden = co.getIdOrden();
+		this.estado = co.getEstado();
+		this.error = co.getError();
+		this.fechaProceso = co.getFechaProceso();
+		this.codTipoOrden = co.getCodTipoOrden();
+		this.referencia = co.getReferencia();
+		this.facturado = co.getFacturado();
+		this.liberado = co.getLiberado();
+		this.divisa = co.getDivisa();
+		this.tipoCambio = co.getTipoCambio();
+		this.proveedor = co.getProveedor();
+		this.decProveedor = co.getDecProveedor();
+		this.codOrganizacion = co.getCodOrganizacion();
+		this.desOrganizacion = co.getDesOrganizacion();
+		this.compania = co.getCompania();
+		this.desCompania = co.getDesCompania();
+		this.codOrganizacionComp = co.getCodOrganizacionComp();
+		this.desOrganizacionComp = co.getDesOrganizacion();
+		this.importeBruto = co.getImporteBruto();
+		this.subtotal = co.getSubtotal();
+		this.iva = co.getIva();
+		this.importeNetoFacturado = co.getImporteNetoFacturado();
+		this.netoEntregado = co.getNetoEntregado();
+		this.identPropietario = co.getIdentPropietario();
+		this.codPropietario = co.getCodPropietario();
+		this.nombrePropietario = co.getNombrePropietario();
+		this.identComprador = co.getIdentComprador();
+		this.codComprador = co.getCodComprador();
+		this.nombreComprador = co.getNombreComprador();
+		this.fechaOrden = co.getFechaOrden();
+		this.fechaPlanificadaRecepcion = co.getFechaPlanificadaRecepcion();
+		this.fechaRealRecepcion = co.getFechaRealRecepcion();
+		this.estadoRecupDatos = co.getEstadoRecupDatos();
+		this.texto1 = co.getTexto1();
+		this.texto2 = co.getTexto2();
+		this.texto3 = co.getTexto3();
+		this.texto4 = co.getTexto4();
+		this.texto5 = co.getTexto5();
+		this.texto6 = co.getTexto6();
+		this.texto7 = co.getTexto7();
+		this.texto8 = co.getTexto8();
+		this.texto9 = co.getTexto9();
+		this.texto10 = co.getTexto10();
+		this.numerico1 = co.getNumerico1();
+		this.numerico2 = co.getNumerico2();
+		this.numerico3 = co.getNumerico3();
+		this.numerico4 = co.getNumerico4();
+		this.numerico5 = co.getNumerico5();
+		this.fecha1 = co.getFecha1();
+		this.fecha2 = co.getFecha2();
+		this.fecha3 = co.getFecha3();
+		this.fecha4 = co.getFecha4();
+		this.fecha5 = co.getFecha5();
+		this.personaReferencia = co.getPersonaReferencia();
+		this.codProveedorPrincipal = co.getCodProveedorPrincipal();
+		this.nombreProveedorPrincipal = co.getNombreProveedorPrincipal();
+		this.bienesFacturadosRecib = co.getBienesFacturadosRecib();
+		this.importeBrutoCalculado = co.getImporteBrutoCalculado();
+		this.estadoRevision = co.getEstadoRevision();
+		this.fechaRevision = co.getFechaRevision();
+		this.tipoOrden = co.getTipoOrden();
+	}
+	
+	public CabeceraOrdenDTO(CabeceraOrdenH co) {
 		super();
 		this.codigo = co.getCodigo();
 		this.numeroOrden = co.getNumeroOrden();

@@ -53,7 +53,7 @@ public class ClienteSFTP implements IClienteSFTP {
 					respuesta.setFechaArchivo(file.lastModified());
 					respuesta.setFileDownload(file);
 				} else
-					throw new Exception("No existe conección al SFTP");
+					throw new Exception("No existe conexión al SFTP");
 	
 			} catch (SftpException | IOException ex) {
 				logger.error("Error download file", ex);
@@ -67,10 +67,10 @@ public class ClienteSFTP implements IClienteSFTP {
 	
 	@Override
 	public synchronized RespuestaSFTP downloadListFiles(String nameFile, String pathSftp, String pathDownload, ChannelSftp channelSftp) throws Exception {
-		System.out.println(" | ==> File Name Download: " + nameFile); 
+		System.out.println(" |#### File Download: " + nameFile); 
 		synchronized (this) {
 			RespuestaSFTP respuesta = new RespuestaSFTP(); 
-			OutputStream outputStream;
+			OutputStream outputStream = null;
 			try {
 				if (channelSftp != null) { 
 					channelSftp.cd(pathSftp);
@@ -83,14 +83,13 @@ public class ClienteSFTP implements IClienteSFTP {
 					respuesta.setFechaArchivo(file.lastModified());
 					respuesta.setFileDownload(file);
 				} else
-					throw new Exception("No existe conección al SFTP");
+					throw new Exception("No existe conexión al SFTP");
 	
 			} catch (SftpException | IOException ex) {
 				logger.error("Error download file", ex);
 			} finally {
-				
+				outputStream.close();
 			}
-	
 			return respuesta;
 		}
 	}
@@ -115,7 +114,7 @@ public class ClienteSFTP implements IClienteSFTP {
 						}
 					}			
 				} else {
-					throw new Exception("No existe conección al SFTP");	
+					throw new Exception("No existe conexión al SFTP");	
 				}
 				System.out.println(" | Se eliminaron: " + cantEliminados + " archivos del SFTP");
 			} catch (SftpException | IOException ex) {
@@ -129,7 +128,6 @@ public class ClienteSFTP implements IClienteSFTP {
 	@Override
 	public List<String> getNameFiles(String usuarioSftp, String passwordSftp, String servidorSftp, int puertoSftp,
 			String pathSftp) throws Exception {
-		System.out.println(" | ==> Read directory filenames"); 
 		ChannelSftp channelSftp = createChannelSftp(usuarioSftp, passwordSftp, servidorSftp, 15000, puertoSftp, 15000);
 		List<String> nameFiles = new ArrayList<>();
 		try {
@@ -140,13 +138,14 @@ public class ClienteSFTP implements IClienteSFTP {
 					nameFiles.add(entry.getFilename()); 
 				}
 			} else
-				throw new Exception("No existe conección al SFTP"); 
+				throw new Exception("No existe conexión al SFTP"); 
 
 		} catch (SftpException ex) {
 			logger.error("Error get filenames", ex);
 		} finally { 
 			disconnectChannelSftp(channelSftp);
 		}
+		System.out.println("Lectura directorio SFTP, archivos: " + nameFiles.size()); 
 		return nameFiles;
 	}
 
