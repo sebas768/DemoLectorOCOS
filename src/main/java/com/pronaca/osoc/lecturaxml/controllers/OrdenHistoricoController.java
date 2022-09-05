@@ -16,7 +16,7 @@ public class OrdenHistoricoController {
 	private IOrdenHistoricoService iOrdenHistoricoService;
 
 	
-	@GetMapping("/ocosH/getOrdenH")
+	@GetMapping("/ocosH/getCabeceraH")
 	public ResponseEntity<?> getAll(@RequestParam("n") String numeroOrden) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(iOrdenHistoricoService.findByNumeroOrden(numeroOrden));
@@ -32,7 +32,7 @@ public class OrdenHistoricoController {
 	 * @param numeroOrden
 	 * @return
 	 */
-	@GetMapping("/ocosH/getCabeceraH")
+	@GetMapping("/ocosH/getOrdenH")
 	public ResponseEntity<?> getOcos(@RequestParam("c") Long codigo) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(iOrdenHistoricoService.findByCodigo(codigo));
