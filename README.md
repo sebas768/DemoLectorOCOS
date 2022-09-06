@@ -1,6 +1,6 @@
 # api-osoc-lecturaxml
 
-
+## Fin desarrollo git bayteq
 
 ## Getting started
 
